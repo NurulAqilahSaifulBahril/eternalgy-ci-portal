@@ -1,0 +1,59 @@
+{
+  "name": "eternalgy-ci-portal",
+  "productName": "Eternalgy C&I Portal",
+  "version": "1.0.0",
+  "description": "Commercial department portal for solar C&I projects — pipeline, projects, materials, design, savings, GITA, installation reports, KPIs.",
+  "main": "main.js",
+  "author": "Eternalgy",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "web": "node server.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "release": "electron-builder --publish always"
+  },
+  "build": {
+    "appId": "my.eternalgy.ciportal",
+    "productName": "Eternalgy C&I Portal",
+    "copyright": "Copyright © Eternalgy",
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.ico",
+      "artifactName": "Eternalgy-CI-Portal-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Eternalgy C&I Portal"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "NurulAqilahSaifulBahril",
+        "repo": "eternalgy-ci-portal",
+        "releaseType": "release"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}
