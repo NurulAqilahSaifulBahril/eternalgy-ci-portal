@@ -1,7 +1,7 @@
 {
   "name": "eternalgy-ci-portal",
   "productName": "Eternalgy C&I Portal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Commercial department portal for solar C&I projects — pipeline, projects, materials, design, savings, GITA, installation reports, KPIs.",
   "main": "main.js",
   "author": "Eternalgy",
@@ -28,7 +28,14 @@
       "buildResources": "build"
     },
     "win": {
-      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
       "icon": "build/icon.ico",
       "artifactName": "Eternalgy-CI-Portal-Setup-${version}.${ext}"
     },
