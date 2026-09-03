@@ -4,24 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ETERNALGY C&amp;I PORTAL — Commercial Department</title>
+<script>
+  (function(){
+    try{
+      var saved = window.localStorage.getItem('eternalgy_theme_mode');
+      if(saved === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); }
+    }catch(e){}
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0F3D38;
-    --navy-2:#1B5C50;
-    --paper:#F5F7F1;
+    --navy:#2F6FB0;
+    --navy-2:#3E82C4;
+    --sidebar-a:#13294B;
+    --sidebar-b:#1D3F72;
+    --paper:#F5F7FA;
     --panel:#FFFFFF;
-    --ink:#152722;
-    --ink-soft:#5E7069;
+    --panel-2:#EEF2F6;
+    --ink:#1B2733;
+    --ink-soft:#5B6B7A;
     --amber:#F0A93E;
     --amber-deep:#C97D1A;
-    --line:#DCE6DE;
+    --amber-ink:#C97D1A;
+    --line:#DCE3EA;
     --green:#2E9E6D;
     --red:#D14C4C;
     --blue:#2F86C0;
+    --tint-green-bg:#E6F3EC;
+    --tint-green-border:#BFE0CC;
+    --tint-green-text:#1E7A4C;
+    --tint-amber-bg:#FFF6E8;
+    --tint-amber-border:#F0D9A8;
     --radius:10px;
   }
+  html[data-theme="dark"]{
+    --navy:#5B9BD9;
+    --navy-2:#78B0E5;
+    --sidebar-a:#060D18;
+    --sidebar-b:#0D1E36;
+    --paper:#0E141C;
+    --panel:#1A2430;
+    --panel-2:#222E3B;
+    --ink:#E7ECF2;
+    --ink-soft:#8DA0B3;
+    --amber:#F0A93E;
+    --amber-deep:#D9932E;
+    --amber-ink:#F0B85C;
+    --line:#2C3A49;
+    --green:#3DBB82;
+    --red:#E2695F;
+    --blue:#5B9BD9;
+    --tint-green-bg:rgba(61,187,130,0.16);
+    --tint-green-border:rgba(61,187,130,0.45);
+    --tint-green-text:#6FD9A6;
+    --tint-amber-bg:rgba(240,169,62,0.14);
+    --tint-amber-border:rgba(240,169,62,0.4);
+  }
+  html, body{ background:var(--paper); transition:background .15s ease; }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{ font-family:'IBM Plex Sans', sans-serif; background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased; }
@@ -32,7 +73,7 @@
   .app{display:flex; min-height:100vh;}
   .sidebar{
     width:230px; flex-shrink:0;
-    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    background:linear-gradient(180deg, var(--sidebar-a) 0%, var(--sidebar-b) 100%);
     color:#EAF5F0; padding:22px 16px; position:sticky; top:0; height:100vh;
     display:flex; flex-direction:column; gap:22px;
   }
@@ -67,6 +108,10 @@
   .sidebar-footer button{ all:unset; cursor:pointer; display:block; width:100%; background:rgba(255,255,255,0.08); color:#EAF5F0;
     text-align:center; padding:9px 0; border-radius:8px; font-size:12px; font-weight:500; margin-bottom:8px; transition:background .15s ease; }
   .sidebar-footer button:hover{background:rgba(255,255,255,0.14);}
+  .theme-toggle{ display:flex; gap:4px; background:rgba(255,255,255,0.08); border-radius:8px; padding:3px; margin-bottom:8px; }
+  .theme-toggle button{ all:unset; cursor:pointer; flex:1; text-align:center; padding:7px 0; border-radius:6px; font-size:11.5px;
+    font-weight:600; color:#B9CCE0; transition:background .15s ease, color .15s ease; }
+  .theme-toggle button.active{ background:var(--amber); color:#1A1200; }
 
   .main-wrap{flex:1; display:flex; flex-direction:column; min-width:0;}
   .main{flex:1; padding:32px 40px; max-width:1180px; width:100%;}
@@ -81,7 +126,7 @@
   .topbar-signout{ background:var(--panel); }
   .topbar-signout:hover{ border-color:var(--red); color:var(--red); }
   .page-head{margin-bottom:26px; display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap;}
-  .page-head .eyebrow{ font-size:11px; text-transform:uppercase; letter-spacing:1.2px; color:var(--amber-deep); font-weight:600; margin:0 0 6px; }
+  .page-head .eyebrow{ font-size:11px; text-transform:uppercase; letter-spacing:1.2px; color:var(--amber-ink); font-weight:600; margin:0 0 6px; }
   .page-head h2{font-size:26px; margin:0 0 6px; color:var(--navy);}
   .page-head p{font-size:13.5px; color:var(--ink-soft); margin:0; max-width:640px;}
 
@@ -98,10 +143,10 @@
   .btn-danger{background:transparent; color:var(--red); font-size:12px;}
   .btn-danger:hover{text-decoration:underline;}
   .btn-icon{background:transparent; color:var(--ink-soft); padding:5px 7px; border-radius:6px; font-size:12px;}
-  .btn-icon:hover{background:#EAF0EA; color:var(--navy);}
+  .btn-icon:hover{background:var(--panel-2); color:var(--navy);}
 
   input, select, textarea{ font-family:inherit; font-size:13.5px; color:var(--ink); border:1px solid var(--line); border-radius:7px;
-    padding:8px 10px; background:#fff; width:100%; }
+    padding:8px 10px; background:var(--panel-2); width:100%; }
   textarea{resize:vertical; min-height:56px;}
   input:focus, select:focus, textarea:focus, button:focus-visible{ outline:2px solid var(--amber); outline-offset:1px; border-color:var(--amber); }
   label{font-size:11.5px; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:5px;}
@@ -130,19 +175,19 @@
     background:transparent; color:var(--ink-soft); border:1px solid var(--line); }
   .btn-upload:hover{border-color:var(--navy); color:var(--navy);}
   .roof-photo-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(96px,1fr)); gap:8px;}
-  .roof-photo{position:relative; border-radius:7px; overflow:hidden; border:1px solid var(--line); aspect-ratio:1/1; background:#EAF0EA;}
+  .roof-photo{position:relative; border-radius:7px; overflow:hidden; border:1px solid var(--line); aspect-ratio:1/1; background:var(--panel-2);}
   .roof-photo img{width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;}
   .roof-photo-remove{ all:unset; cursor:pointer; position:absolute; top:3px; right:3px; width:18px; height:18px; border-radius:50%;
     background:rgba(18,32,58,0.7); color:#fff; font-size:10px; display:flex; align-items:center; justify-content:center; line-height:1; }
   .roof-photo-remove:hover{background:var(--red);}
   .client-picker-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
   .client-chip{ all:unset; cursor:pointer; font-size:12.5px; padding:7px 14px; border-radius:20px; border:1px solid var(--line);
-    color:var(--ink-soft); background:#fff; white-space:nowrap; }
+    color:var(--ink-soft); background:var(--panel-2); white-space:nowrap; }
   .client-chip:hover{border-color:var(--navy); color:var(--navy);}
   .client-chip.active{background:var(--navy); color:#fff; border-color:var(--navy);}
   .roof-photo-empty{font-size:12px; color:var(--ink-soft); margin:0;}
   .proposal-file-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:4px;
-    padding:9px 12px; border:1px solid var(--line); border-radius:8px; background:#F7F9F4; }
+    padding:9px 12px; border:1px solid var(--line); border-radius:8px; background:var(--panel-2); }
   .proposal-file-link{ font-size:12.5px; font-weight:600; color:var(--navy); text-decoration:none; display:flex; align-items:center; gap:6px; }
   .proposal-file-link:hover{text-decoration:underline;}
   .proposal-file-remove{ all:unset; cursor:pointer; font-size:11px; color:var(--ink-soft); padding:3px 6px; border-radius:5px; flex-shrink:0; }
@@ -167,28 +212,50 @@
     font-size:18px; }
   .lightbox-close:hover{ background:rgba(255,255,255,0.22); }
   /* ---- Report summary (printable one-pager) ---- */
-  .report-doc{ background:#fff; border-radius:4px; }
+  .letterhead-block{ margin:0 0 14px; }
+  .letterhead-img{ width:100%; max-width:520px; height:auto; display:block; }
+  .letterhead-rule{ height:2px; background:linear-gradient(90deg, var(--navy) 0%, var(--navy) 60%, transparent 100%); margin:0 0 18px; }
+  .report-doc{ background:#fff; border-radius:4px; counter-reset:section-counter; }
   .report-doc h1{ font-size:20px; margin:0 0 2px; color:var(--navy); }
-  .report-doc .report-doc-sub{ color:var(--ink-soft); font-size:12.5px; margin:0 0 18px; }
+  .report-doc .report-doc-sub{ color:var(--ink-soft); font-size:12.5px; margin:0 0 14px; }
+  /* Document control strip — doc no / generated timestamp / classification,
+     gives every exported report a formal, traceable document identity. */
+  .doc-control{ display:flex; flex-wrap:wrap; gap:8px 22px; align-items:center; background:#F4F6F5; border:1px solid var(--line); border-radius:5px; padding:8px 14px; margin:0 0 18px; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); }
+  .doc-control b{ color:var(--navy); font-weight:600; }
+  .doc-control .doc-classification{ margin-left:auto; text-transform:uppercase; letter-spacing:.04em; font-weight:700; color:#8A5A00; background:#FCEBC7; padding:2px 8px; border-radius:3px; }
   .report-doc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 24px; margin-bottom:16px; }
   .report-doc-field label{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin-bottom:2px; }
-  .report-doc-field div{ font-size:13.5px; color:var(--ink); }
-  .report-doc-section{ margin-top:16px; }
-  .report-doc-section h3{ font-size:12.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin:0 0 6px; border-bottom:1px solid var(--line); padding-bottom:4px; }
+  .report-doc-field div{ font-size:13.5px; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .report-doc-section{ margin-top:18px; counter-increment:section-counter; }
+  .report-doc-section h3{ font-size:12.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--navy); margin:0 0 8px; border-bottom:1.5px solid var(--navy); padding-bottom:5px; font-weight:700; }
+  .report-doc-section h3::before{ content:counter(section-counter, decimal) ".0  "; color:var(--navy); }
   .report-doc-section p{ font-size:13.5px; line-height:1.6; white-space:pre-line; margin:0; }
   .report-doc-photos{ display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px; margin-top:8px; }
   .report-doc-photos img{ width:100%; height:90px; object-fit:cover; border-radius:6px; border:1px solid var(--line); }
+  .report-doc table{ border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; }
   .report-doc table th, .report-doc table td{ padding:7px 8px; text-align:left; border-bottom:1px solid var(--line); }
-  .report-doc table th{ font-size:10.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); }
+  .report-doc table th{ font-size:10.2px; text-transform:uppercase; letter-spacing:.04em; color:#fff; background:var(--navy); font-weight:600; }
+  .report-doc table thead tr:first-child th:first-child{ border-top-left-radius:3px; }
+  .report-doc table thead tr:first-child th:last-child{ border-top-right-radius:3px; }
+  .report-doc table tbody tr:nth-child(even){ background:#F6F8F7; }
+  .report-doc table tbody tr:hover{ background:#EFF3F1; }
   .report-doc-stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin:14px 0; }
   .report-doc-stats .stat{ border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
   .report-doc-stats .stat .v{ font-family:'IBM Plex Mono', monospace; font-size:17px; font-weight:600; color:var(--navy); }
   .report-doc-stats .stat .l{ font-size:10.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; margin-top:2px; }
+  /* Sign-off / approval block — appended to every report for a formal,
+     technical-document feel (common in engineering / compliance docs). */
+  .doc-signoff{ margin-top:34px; padding-top:16px; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(3,1fr); gap:22px; page-break-inside:avoid; }
+  .doc-signoff .signoff-col label{ display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); margin-bottom:26px; }
+  .doc-signoff .signoff-line{ border-top:1px solid var(--ink); margin-bottom:5px; }
+  .doc-signoff .signoff-sub{ font-size:10px; color:var(--ink-soft); }
+  .doc-footer-note{ margin-top:18px; font-size:9.5px; color:var(--ink-soft); text-align:center; border-top:1px solid var(--line); padding-top:8px; }
   @media print{
     body *{ visibility:hidden; }
     #printArea, #printArea *{ visibility:visible; }
     #printArea{ position:absolute; left:0; top:0; width:100%; padding:0; }
     .no-print{ display:none !important; }
+    @page{ margin:16mm 14mm 18mm; }
   }
   .pipeline-toolbar{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;}
   .pipeline-toolbar .client-search-row{flex:1; min-width:240px;}
@@ -200,22 +267,22 @@
   .ring-label b{color:var(--navy); font-family:'IBM Plex Mono', monospace; font-size:12.5px;}
 
   .stage-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:8px; margin-top:16px; align-items:start; }
-  .stage-item{ border-radius:7px; border:1px solid var(--line); background:#F7F9F4; transition:background .12s ease, border-color .12s ease; overflow:hidden; }
-  .stage-item.done{background:#E6F5EC; border-color:#BFE3CC;}
-  .stage-item.final{border-color:#F0D9A8;}
-  .stage-item.final.done{border-color:#BFE3CC;}
+  .stage-item{ border-radius:7px; border:1px solid var(--line); background:var(--panel-2); transition:background .12s ease, border-color .12s ease; overflow:hidden; }
+  .stage-item.done{background:var(--tint-green-bg); border-color:var(--tint-green-border);}
+  .stage-item.final{border-color:var(--tint-amber-border);}
+  .stage-item.final.done{border-color:var(--tint-green-border);}
   .stage-row{ display:flex; align-items:center; gap:8px; padding:8px 9px; cursor:pointer; user-select:none; }
   .stage-row input{width:auto; margin:0; accent-color:var(--green); cursor:pointer; flex-shrink:0;}
   .stage-row .stage-idx{font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--ink-soft); flex-shrink:0;}
   .stage-row .stage-text{font-size:12.5px; color:var(--ink); line-height:1.3; flex:1;}
   .stage-item.done .stage-text{color:var(--green); font-weight:500;}
   .stage-note-btn{ all:unset; cursor:pointer; font-size:12px; padding:3px 5px; border-radius:5px; color:var(--ink-soft); flex-shrink:0; position:relative; }
-  .stage-note-btn:hover{background:rgba(0,0,0,0.05);}
-  .stage-note-btn.has-note{color:var(--amber-deep);}
+  .stage-note-btn:hover{background:var(--panel-2);}
+  .stage-note-btn.has-note{color:var(--amber-ink);}
   .stage-note-btn .dot{ position:absolute; top:2px; right:2px; width:6px; height:6px; border-radius:50%; background:var(--amber-deep); }
   .stage-remark-wrap{padding:0 9px 9px;}
   .stage-remark-wrap textarea{font-size:12px; min-height:44px;}
-  .final-badge{ font-size:9.5px; text-transform:uppercase; letter-spacing:.5px; color:var(--amber-deep); font-weight:700; padding:0 9px; }
+  .final-badge{ font-size:9.5px; text-transform:uppercase; letter-spacing:.5px; color:var(--amber-ink); font-weight:700; padding:0 9px; }
 
   table{width:100%; border-collapse:collapse; font-size:13px;}
   th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.5px; color:var(--ink-soft); font-weight:600; padding:8px 10px; border-bottom:2px solid var(--line); }
@@ -227,22 +294,22 @@
   .client-select-bar .field{min-width:220px; margin-bottom:0;}
 
   .pipeline-board{display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:4px;}
-  .pipeline-col{background:#F7F9F4; border:1px solid var(--line); border-radius:var(--radius); padding:12px; min-height:120px;}
+  .pipeline-col{background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:12px; min-height:120px;}
   .pipeline-col h3{font-size:12px; text-transform:uppercase; letter-spacing:.4px; color:var(--ink-soft); margin:0 0 10px;}
-  .pipeline-card{ background:#fff; border:1px solid var(--line); border-radius:7px; padding:9px 10px; margin-bottom:8px; font-size:12.5px; }
+  .pipeline-card{ background:var(--panel); border:1px solid var(--line); border-radius:7px; padding:9px 10px; margin-bottom:8px; font-size:12.5px; }
   .pipeline-card .lead-name{font-weight:600; color:var(--navy); display:block; margin-bottom:3px;}
   .pipeline-card select{margin-top:6px; font-size:11.5px; padding:5px 6px;}
-  .pipeline-card .kw{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--amber-deep);}
+  .pipeline-card .kw{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--amber-ink);}
   .pipeline-card-meta{font-size:11px; color:var(--ink-soft); margin-top:4px;}
   .pipeline-card-badge{ display:inline-block; margin-top:5px; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.3px;
-    color:var(--green); background:#E6F5EC; border:1px solid #BFE3CC; border-radius:20px; padding:2px 8px; }
+    color:var(--green); background:var(--tint-green-bg); border:1px solid var(--tint-green-border); border-radius:20px; padding:2px 8px; }
   .pipeline-card-actions{display:flex; gap:6px; margin-top:8px;}
   .pipeline-card-actions .btn{padding:6px 9px; font-size:11px; flex:1; justify-content:center;}
 
   .result-strip{display:flex; gap:14px; flex-wrap:wrap; margin-top:18px;}
   .result-tile{ flex:1; min-width:140px; background:var(--navy); color:#fff; border-radius:var(--radius); padding:16px 18px; }
   .result-tile .val{font-family:'IBM Plex Mono', monospace; font-size:22px; font-weight:600; color:var(--amber);}
-  .result-tile .lbl{font-size:11px; color:#B7CFC7; text-transform:uppercase; letter-spacing:.5px; margin-top:4px;}
+  .result-tile .lbl{font-size:11px; color:#C7D9EC; text-transform:uppercase; letter-spacing:.5px; margin-top:4px;}
 
   .empty{ text-align:center; padding:40px 20px; color:var(--ink-soft); font-size:13px; border:1px dashed var(--line); border-radius:var(--radius); }
 
@@ -250,12 +317,31 @@
   .stage-config-row:last-child{border-bottom:none;}
   .stage-config-row .order-btns{display:flex; flex-direction:column; gap:2px;}
   .stage-config-row .order-btns button{ all:unset; cursor:pointer; font-size:10px; color:var(--ink-soft); padding:1px 4px; border-radius:3px; }
-  .stage-config-row .order-btns button:hover{background:#EAF0EA; color:var(--navy);}
+  .stage-config-row .order-btns button:hover{background:var(--panel-2); color:var(--navy);}
   .stage-config-row input{flex:1;}
   .stage-config-idx{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); width:24px; flex-shrink:0;}
-  .stage-config-final-tag{font-size:10px; color:var(--amber-deep); font-weight:700; text-transform:uppercase; width:64px; flex-shrink:0; text-align:right;}
+  .stage-config-final-tag{font-size:10px; color:var(--amber-ink); font-weight:700; text-transform:uppercase; width:64px; flex-shrink:0; text-align:right;}
 
-  .notice{ background:#FFF6E8; border:1px solid #F0D9A8; color:var(--amber-deep); font-size:12.5px; padding:10px 14px; border-radius:8px; margin-bottom:16px; }
+  .notice{ background:var(--tint-amber-bg); border:1px solid var(--tint-amber-border); color:var(--amber-ink); font-size:12.5px; padding:10px 14px; border-radius:8px; margin-bottom:16px; }
+
+  /* Module 09 — Guidelines */
+  .guide-filters{ display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 18px; }
+  .guide-chip{ all:unset; cursor:pointer; font-size:12px; font-weight:500; padding:6px 13px; border-radius:20px;
+    border:1px solid var(--line); color:var(--ink-soft); background:var(--panel); transition:background .15s ease, color .15s ease; }
+  .guide-chip:hover{background:var(--panel-2);}
+  .guide-chip.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
+  .guide-card{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:12px; }
+  .guide-card-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; cursor:pointer; }
+  .guide-card-titles{flex:1; min-width:0;}
+  .guide-card-titles h3{ margin:0 0 5px; font-size:15px; }
+  .guide-card-meta{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:11px; color:var(--ink-soft); }
+  .guide-cat-tag{ background:var(--tint-green-bg); color:var(--tint-green-text); border-radius:20px; padding:2px 10px; font-weight:600; letter-spacing:.2px; }
+  .guide-card-actions{ display:flex; gap:6px; flex-shrink:0; }
+  .guide-card-actions .btn{padding:6px 9px; font-size:11px;}
+  .guide-toggle{ all:unset; cursor:pointer; font-size:12px; color:var(--ink-soft); padding:4px; flex-shrink:0; }
+  .guide-card-body{ margin-top:12px; padding-top:12px; border-top:1px solid var(--line); font-size:13.5px; line-height:1.65; white-space:pre-line; }
+  .guide-card-attachment{ margin-top:12px; }
+  .guide-empty{ text-align:center; color:var(--ink-soft); font-size:13px; padding:40px 0; }
 
   /* ---- Module 06/07/08 shared bits ---- */
   .toolbar-row{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px;}
@@ -276,7 +362,7 @@
   .kpi-tile .kpi-label{font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:var(--ink-soft); font-weight:600; margin:0 0 8px;}
   .kpi-tile .kpi-value{font-family:'IBM Plex Mono', monospace; font-size:24px; font-weight:600; color:var(--navy);}
   .kpi-tile .kpi-target{font-size:11.5px; color:var(--ink-soft); margin-top:4px;}
-  .kpi-bar-track{height:8px; border-radius:5px; background:#E4EAE2; margin-top:10px; overflow:hidden;}
+  .kpi-bar-track{height:8px; border-radius:5px; background:var(--line); margin-top:10px; overflow:hidden;}
   .kpi-bar-fill{height:100%; border-radius:5px; background:var(--amber);}
   .kpi-bar-fill.good{background:var(--green);}
   .kpi-bar-fill.bad{background:var(--red);}
@@ -320,19 +406,19 @@
   /* ---------- AUTH / SIGN-IN ---------- */
   .auth-screen{
     position:fixed; inset:0; z-index:400; display:flex; align-items:center; justify-content:center;
-    padding:24px; background:linear-gradient(150deg, var(--navy) 0%, var(--navy-2) 55%, #0B2F2B 100%);
+    padding:24px; background:linear-gradient(150deg, var(--sidebar-b) 0%, var(--navy) 55%, var(--sidebar-a) 100%);
     overflow:auto;
   }
   .auth-card{
-    width:100%; max-width:380px; background:var(--panel); border-radius:14px; padding:30px 28px 26px;
+    width:100%; max-width:460px; background:var(--panel); border-radius:16px; padding:40px 40px 34px;
     box-shadow:0 24px 60px rgba(0,0,0,.32);
   }
-  .auth-card .auth-logo{ width:100%; max-width:150px; height:auto; display:block; margin:0 auto 18px; }
-  .auth-card h2{ font-size:19px; margin:0 0 4px; color:var(--navy); text-align:center; }
-  .auth-card .auth-sub{ font-size:12.5px; color:var(--ink-soft); margin:0 0 22px; text-align:center; line-height:1.5; }
-  .auth-card label{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-soft); font-weight:600; margin-bottom:6px; }
-  .auth-card input[type=text], .auth-card input[type=password]{ width:100%; }
-  .auth-field{ margin-bottom:14px; }
+  .auth-card .auth-logo{ width:100%; max-width:190px; height:auto; display:block; margin:0 auto 22px; }
+  .auth-card h2{ font-size:24px; margin:0 0 6px; color:var(--navy); text-align:center; }
+  .auth-card .auth-sub{ font-size:13.5px; color:var(--ink-soft); margin:0 0 28px; text-align:center; line-height:1.5; }
+  .auth-card label{ display:block; font-size:11.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-soft); font-weight:600; margin-bottom:7px; }
+  .auth-card input[type=text], .auth-card input[type=password]{ width:100%; font-size:15px; padding:12px 13px; }
+  .auth-field{ margin-bottom:18px; }
   .pw-wrap{ position:relative; }
   .pw-wrap input{ padding-right:44px !important; }
   .pw-toggle{
@@ -341,12 +427,13 @@
   }
   .pw-toggle:hover{ background:#EAF0EA; color:var(--navy); }
   .pw-toggle:focus-visible{ outline:2px solid var(--amber); }
-  .auth-submit{ width:100%; justify-content:center; margin-top:6px; }
+  /* .btn uses all:unset, which resets box-sizing — restate it so 100% + padding stays inside the card */
+  .auth-submit{ width:100%; box-sizing:border-box; justify-content:center; margin-top:8px; padding:13px 16px; font-size:15px; }
   .auth-error{
     background:#FBE4E4; border:1px solid #F0C4C4; color:#A63232; font-size:12.5px;
     padding:9px 12px; border-radius:8px; margin-bottom:14px; line-height:1.45;
   }
-  .auth-hint{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin:18px 0 0; line-height:1.5; }
+  .auth-hint{ font-size:12.5px; color:var(--ink-soft); text-align:center; margin:22px 0 0; line-height:1.55; }
   .auth-hint code{ font-family:'IBM Plex Mono', monospace; background:#EEF3EC; padding:1px 5px; border-radius:4px; }
 
   /* ---------- SIDEBAR USER BLOCK ---------- */
@@ -405,6 +492,20 @@
   .action-auth{ background:#F0EAF7; color:#6B4C9A; }
   .log-pager{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; flex-wrap:wrap; }
   .log-pager-info{ font-size:12px; color:var(--ink-soft); }
+  /* ---------- DARK MODE: auth + IT Admin tints ---------- */
+  html[data-theme="dark"] .pw-toggle:hover,
+  html[data-theme="dark"] .tabs button:hover{ background:var(--panel-2); }
+  html[data-theme="dark"] .auth-hint code{ background:var(--panel-2); }
+  html[data-theme="dark"] .auth-error{ background:rgba(226,105,95,0.16); border-color:rgba(226,105,95,0.45); color:#F2A19A; }
+  html[data-theme="dark"] .role-pill.admin{ background:var(--tint-amber-bg); color:var(--amber-ink); }
+  html[data-theme="dark"] .role-pill.user{ background:var(--panel-2); color:var(--ink-soft); }
+  html[data-theme="dark"] .role-pill.off{ background:rgba(226,105,95,0.16); color:#F2A19A; }
+  html[data-theme="dark"] .diff-from,
+  html[data-theme="dark"] .action-delete{ background:rgba(226,105,95,0.16); color:#F2A19A; }
+  html[data-theme="dark"] .diff-to,
+  html[data-theme="dark"] .action-create{ background:var(--tint-green-bg); color:var(--tint-green-text); }
+  html[data-theme="dark"] .action-update{ background:rgba(91,155,217,0.18); color:#8FC1EE; }
+  html[data-theme="dark"] .action-auth{ background:rgba(150,120,200,0.2); color:#C3AEE8; }
 </style>
 </head>
 <body>
@@ -430,9 +531,12 @@
       <button data-page="materials"><span class="num">03</span> Material List</button>
       <button data-page="design"><span class="num">04</span> Solar Design</button>
       <button data-page="savings"><span class="num">05</span> Savings Analysis</button>
-      <button data-page="gita"><span class="num">06</span> GITA Doc Checklist</button>
-      <button data-page="installReports"><span class="num">07</span> Installation Reports</button>
-      <button data-page="kpi"><span class="num">08</span> KPI Dashboard</button>
+      <button data-page="gitaCalc"><span class="num">06</span> GITA Calculator</button>
+      <button data-page="gita"><span class="num">07</span> GITA Doc Checklist</button>
+      <button data-page="installReports"><span class="num">08</span> Installation Reports</button>
+      <button data-page="kpi"><span class="num">09</span> KPI Dashboard</button>
+      <button data-page="guidelines"><span class="num">10</span> Guidelines</button>
+      <button data-page="weeklyReports"><span class="num">11</span> Weekly Job Report</button>
       <div class="nav-group-sep" id="navAdminSep" style="display:none;"><span>System</span></div>
       <button data-page="itadmin" id="navItAdmin" class="nav-system" style="display:none;">⚙ IT Admin</button>
     </nav>
@@ -440,6 +544,10 @@
       <span class="sync-dot"></span><span id="syncStatusText">Connecting…</span>
     </div>
     <div class="sidebar-footer">
+      <div class="theme-toggle" id="themeToggle">
+        <button data-theme-choice="light" id="themeLightBtn">☀ Light</button>
+        <button data-theme-choice="dark" id="themeDarkBtn">🌙 Dark</button>
+      </div>
       <button id="syncNowBtn">🔄 Sync now</button>
       <button id="exportBtn">⬇ Backup (.json)</button>
       <button id="importBtn">⬆ Restore backup</button>
@@ -502,6 +610,8 @@ let state = {
   leads: [],
   gitaCustomers: [],
   installReports: [],
+  weeklyReports: [],
+  guidelines: [],
   kpi: {
     yearlyTargetSales: 2000000,
     targetWinRateMin: 20,
@@ -574,6 +684,17 @@ function seedData(){
       address:'Level 3, Example Tower, 55100 Sample City', agent:'Agent Two', kw:120,
       projectAmount:420000, scheme:'NEM', stage:'Proposal Sent', expectedCloseDate:'', probability:40, notes:'Awaiting sign-off from HQ finance team.', panelLayouts:[] },
   );
+  state.guidelines.push(
+    { id:uid(), title:'How to Apply for a Solar PV Contractor License', category:'Licensing',
+      content:'1. Prepare company SSM documents, CIDB registration, and staff competency certificates.\n2. Submit application via the ST (Suruhanjaya Tenaga) online portal.\n3. Pay the prescribed fee and wait for processing (typically 4-6 weeks).\n4. Once approved, renew annually before expiry to avoid lapses.',
+      attachment:null, updatedAt:new Date().toISOString() },
+    { id:uid(), title:'GITA Form — What to Prepare Before Submission', category:'GITA / Tax Incentive',
+      content:'Before filling up the GITA (Green Investment Tax Allowance) form, make sure you already have:\n- Customer\'s full company details & SSM copy\n- Signed quotation / invoice for the solar system\n- System specification sheet (kWp, panel & inverter model)\n- Site address with GPS coordinates\nSend the completed form to MIDA together with these supporting documents.',
+      attachment:null, updatedAt:new Date().toISOString() },
+    { id:uid(), title:'New Staff Onboarding — C&I Department Overview', category:'Onboarding',
+      content:'Welcome to the Commercial & Industrial (C&I) team! Here\'s how a deal typically flows through this portal:\n1. Sales Pipeline (Module 01) — track a lead from New Lead until Closed Won.\n2. Once Closed Won, the site auto-appears in Project Management (Module 02) for progress tracking.\n3. Material List (03) and Solar Design (04) help plan the technical side.\n4. GITA Calculator (06) estimates the tax allowance amount for a system.\n5. GITA Doc Checklist (07) tracks the tax incentive paperwork per customer.\n6. Installation Reports (08) document the completed site with photos.\nBrowse this Guidelines module anytime you\'re unsure how something works.',
+      attachment:null, updatedAt:new Date().toISOString() },
+  );
 }
 
 let currentPage = 'pipeline';
@@ -593,6 +714,12 @@ let reportSearchQuery = ''; // ephemeral UI state: search box on Installation Re
 let reportModalOpen = false; // ephemeral UI state: New/Edit Installation Report modal
 let editingReportId = null; // null = creating a new report, otherwise editing this report's id
 let reportViewId = null; // id of report currently open in the "See Report" summary/print view
+
+let guidelineSearchQuery = ''; // ephemeral UI state: search box on Guidelines
+let guidelineCategoryFilter = 'All'; // ephemeral UI state: category filter chip on Guidelines
+let guidelineModalOpen = false; // ephemeral UI state: New/Edit Guideline modal
+let editingGuidelineId = null; // null = creating a new guideline, otherwise editing this guideline's id
+let expandedGuidelineIds = new Set(); // ephemeral UI state: which guideline cards are expanded/read
 
 /* ---------------------------------------------------------
    SHARED ONLINE STORAGE (with localStorage fallback)
@@ -690,6 +817,24 @@ function migrateState(){
     if(typeof r.installerTeam !== 'string') r.installerTeam = '';
     if(typeof r.summary !== 'string') r.summary = '';
     if(!Array.isArray(r.photos)) r.photos = [];
+  });
+  if(!Array.isArray(state.weeklyReports)) state.weeklyReports = [];
+  state.weeklyReports.forEach(e=>{
+    if(typeof e.pic !== 'string') e.pic = '';
+    if(typeof e.date !== 'string') e.date = '';
+    if(typeof e.scope !== 'string') e.scope = '';
+    if(typeof e.status !== 'string' || !WEEKLY_STATUS_OPTIONS.includes(e.status)) e.status = 'Not Started';
+    if(typeof e.notes !== 'string') e.notes = '';
+    if(typeof e.year !== 'number') e.year = wrGetISOWeek(new Date()).year;
+    if(typeof e.week !== 'number') e.week = wrGetISOWeek(new Date()).week;
+  });
+  if(!Array.isArray(state.guidelines)) state.guidelines = [];
+  state.guidelines.forEach(g=>{
+    if(typeof g.title !== 'string') g.title = '';
+    if(typeof g.category !== 'string') g.category = 'General';
+    if(typeof g.content !== 'string') g.content = '';
+    if(typeof g.attachment !== 'object') g.attachment = null;
+    if(typeof g.updatedAt !== 'string') g.updatedAt = '';
   });
   if(!state.kpi) state.kpi = {};
   if(typeof state.kpi.yearlyTargetSales !== 'number') state.kpi.yearlyTargetSales = 0;
@@ -955,6 +1100,8 @@ const AUDIT_COLLECTIONS = [
   { key:'clients',        module:'Project Management',   noun:'client',   label:x => x.name },
   { key:'gitaCustomers',  module:'GITA Checklist',       noun:'customer', label:x => x.name },
   { key:'installReports', module:'Installation Reports', noun:'report',   label:x => x.siteName },
+  { key:'weeklyReports',  module:'Weekly Job Report',    noun:'entry',    label:x => (x.pic || '') + (x.scope ? ' — ' + x.scope : '') },
+  { key:'guidelines',     module:'Guidelines',           noun:'guideline',label:x => x.title },
   { key:'users',          module:'IT Admin',             noun:'user',     label:x => x.username },
 ];
 
@@ -1153,10 +1300,9 @@ function renderAuthScreen(){
     return;
   }
 
-  const usingDefault = state.users.length === 1 && state.users[0].mustChangePassword;
-  const defaultHint = usingDefault
-    ? `<p class="auth-hint">First run — sign in as <code>${DEFAULT_ADMIN.username}</code> / <code>${DEFAULT_ADMIN.password}</code>, then set your own password.</p>`
-    : '';
+  // Credentials are never shown on screen: the administrator hands them out.
+  // (The seeded first-run admin account still exists — see ensureDefaultAdmin.)
+  const defaultHint = `<p class="auth-hint">Use the username and password given to you by your administrator.</p>`;
 
   root.innerHTML = `
     <div class="auth-screen">
@@ -1746,9 +1892,12 @@ function render(){
   if(currentPage === 'pipeline') html = renderPipeline();
   if(currentPage === 'design') html = renderDesign();
   if(currentPage === 'savings') html = renderSavings();
+  if(currentPage === 'gitaCalc') html = renderGitaCalc();
   if(currentPage === 'gita') html = renderGita();
   if(currentPage === 'installReports') html = renderInstallReports();
   if(currentPage === 'kpi') html = renderKPI();
+  if(currentPage === 'guidelines') html = renderGuidelines();
+  if(currentPage === 'weeklyReports') html = renderWeeklyReports();
   if(currentPage === 'itadmin') html = renderITAdmin();
   main.innerHTML = html;
   attachPageHandlers();
@@ -1760,6 +1909,33 @@ document.getElementById('nav').addEventListener('click', e=>{
   currentPage = btn.dataset.page;
   render();
 });
+
+/* ---------------------------------------------------------
+   THEME (light / dark mode toggle)
+--------------------------------------------------------- */
+function getThemeMode(){
+  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+}
+function syncThemeButtons(){
+  const mode = getThemeMode();
+  const lightBtn = document.getElementById('themeLightBtn');
+  const darkBtn = document.getElementById('themeDarkBtn');
+  if(lightBtn) lightBtn.classList.toggle('active', mode === 'light');
+  if(darkBtn) darkBtn.classList.toggle('active', mode === 'dark');
+}
+function setThemeMode(mode){
+  if(mode === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); }
+  else{ document.documentElement.removeAttribute('data-theme'); }
+  try{ window.localStorage.setItem('eternalgy_theme_mode', mode); }catch(e){}
+  syncThemeButtons();
+  render(); // re-render current page so inline SVG charts pick up new theme colors
+}
+document.getElementById('themeToggle').addEventListener('click', e=>{
+  const btn = e.target.closest('button[data-theme-choice]');
+  if(!btn) return;
+  setThemeMode(btn.dataset.themeChoice);
+});
+syncThemeButtons();
 
 /* ---------------------------------------------------------
    PHOTO LIGHTBOX (in-page viewer — works everywhere, no popups)
@@ -1802,6 +1978,49 @@ document.addEventListener('keydown', e=>{
    choosing "Save as PDF" in the print dialog gives a real PDF file,
    no internet or external library required.
 --------------------------------------------------------- */
+// Official Eternalgy Sdn. Bhd. letterhead, embedded so every printed / exported
+// report carries the real company header (logo, SSM reg no, address, phone).
+const LETTERHEAD_LOGO_B64 = 'data:image/jpeg;base64,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';
+function letterheadHtml(){
+  return `<div class="letterhead-block"><img src="${LETTERHEAD_LOGO_B64}" alt="Eternalgy Sdn. Bhd." class="letterhead-img"></div>`;
+}
+
+// Formal document-control strip shown under the letterhead of every report:
+// a traceable document number, the exact generation timestamp, and a
+// classification tag — the kind of metadata a technical/compliance
+// document is expected to carry.
+function docControlNo(prefix, refId){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `ETG-${prefix}-${y}${m}${day}${refId!==undefined && refId!==null ? '-'+refId : ''}`;
+}
+function docControlBlockHtml(docNo, classification){
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  const timeStr = now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  return `<div class="doc-control">
+    <span>DOCUMENT NO. <b>${escapeHtml(docNo)}</b></span>
+    <span>GENERATED <b>${dateStr}, ${timeStr}</b></span>
+    <span class="doc-classification">${escapeHtml(classification || 'Internal Use')}</span>
+  </div>`;
+}
+// Prepared / Checked / Approved sign-off block, appended to the bottom of
+// every report so it can be routed for physical or scanned sign-off —
+// standard practice for site and compliance documentation.
+function signOffBlockHtml(){
+  const cols = ['Prepared By','Checked By','Approved By'];
+  return `<div class="doc-signoff">
+    ${cols.map(c=>`<div class="signoff-col">
+      <label>${c}</label>
+      <div class="signoff-line"></div>
+      <div class="signoff-sub">Name &amp; Date</div>
+    </div>`).join('')}
+  </div>
+  <p class="doc-footer-note">This document was generated by the Eternalgy C&amp;I Portal and is intended for internal / customer reference. ETERNALGY SDN. BHD. (1523087-A)</p>`;
+}
+
 let pdfExportData = null; // {title, bodyHtml}
 
 // Print helper that opens a fresh top-level tab and prints from there.
@@ -1822,27 +2041,46 @@ function printDocument(title, bodyHtml){
   <style>
     :root{ --navy:#0F3D38; --ink:#152722; --ink-soft:#5E7069; --amber-deep:#C97D1A; --line:#DCE6DE; }
     *{box-sizing:border-box;}
-    body{ font-family:'IBM Plex Sans', Arial, sans-serif; color:var(--ink); margin:0; padding:28px; }
+    body{ font-family:'IBM Plex Sans', Arial, sans-serif; color:var(--ink); margin:0; padding:28px; counter-reset:section-counter; }
     h1{ font-family:'Space Grotesk', Arial, sans-serif; font-size:20px; margin:0 0 2px; color:var(--navy); }
     h3{ font-family:'Space Grotesk', Arial, sans-serif; }
-    .report-doc-sub{ color:var(--ink-soft); font-size:12.5px; margin:0 0 18px; }
+    .report-doc-sub{ color:var(--ink-soft); font-size:12.5px; margin:0 0 14px; }
+    .doc-control{ display:flex; flex-wrap:wrap; gap:8px 22px; align-items:center; background:#F4F6F5; border:1px solid var(--line); border-radius:5px; padding:8px 14px; margin:0 0 18px; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); }
+    .doc-control b{ color:var(--navy); font-weight:600; }
+    .doc-control .doc-classification{ margin-left:auto; text-transform:uppercase; letter-spacing:.04em; font-weight:700; color:#8A5A00; background:#FCEBC7; padding:2px 8px; border-radius:3px; }
     .report-doc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 24px; margin-bottom:16px; }
     .report-doc-field label{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin-bottom:2px; }
-    .report-doc-field div{ font-size:13.5px; color:var(--ink); }
-    .report-doc-section{ margin-top:16px; }
-    .report-doc-section h3{ font-size:12.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin:0 0 6px; border-bottom:1px solid var(--line); padding-bottom:4px; }
+    .report-doc-field div{ font-size:13.5px; color:var(--ink); font-variant-numeric:tabular-nums; }
+    .report-doc-section{ margin-top:18px; counter-increment:section-counter; page-break-inside:avoid; }
+    .report-doc-section h3{ font-size:12.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--navy); margin:0 0 8px; border-bottom:1.5px solid var(--navy); padding-bottom:5px; font-weight:700; }
+    .report-doc-section h3::before{ content:counter(section-counter, decimal) ".0  "; color:var(--navy); }
     .report-doc-section p{ font-size:13.5px; line-height:1.6; white-space:pre-line; margin:0; }
     .report-doc-photos{ display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px; margin-top:8px; }
     .report-doc-photos img{ width:100%; height:90px; object-fit:cover; border-radius:6px; border:1px solid var(--line); }
-    table{width:100%; border-collapse:collapse; font-size:13px;}
-    th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.5px; color:var(--ink-soft); font-weight:600; padding:8px 10px; border-bottom:2px solid var(--line); }
+    table{width:100%; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums;}
+    th{ text-align:left; font-size:10.2px; text-transform:uppercase; letter-spacing:.04em; color:#fff; background:var(--navy); font-weight:600; padding:8px 10px; }
     td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:middle;}
+    tbody tr:nth-child(even){ background:#F6F8F7; }
     .report-doc-stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin:14px 0; }
     .report-doc-stats .stat{ border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
     .report-doc-stats .stat .v{ font-family:monospace; font-size:17px; font-weight:600; color:var(--navy); }
     .report-doc-stats .stat .l{ font-size:10.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; margin-top:2px; }
     .proposal-link{ display:inline-block; font-size:12.5px; font-weight:600; color:var(--navy); }
-    @media print{ body{ padding:0; } }
+    .letterhead-block{ margin:0 0 14px; }
+    .letterhead-img{ width:100%; max-width:520px; height:auto; display:block; }
+    .letterhead-rule{ height:2px; background:linear-gradient(90deg, var(--navy) 0%, var(--navy) 60%, transparent 100%); margin:0 0 18px; }
+    .doc-signoff{ margin-top:34px; padding-top:16px; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(3,1fr); gap:22px; page-break-inside:avoid; }
+    .doc-signoff .signoff-col label{ display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); margin-bottom:26px; }
+    .doc-signoff .signoff-line{ border-top:1px solid var(--ink); margin-bottom:5px; }
+    .doc-signoff .signoff-sub{ font-size:10px; color:var(--ink-soft); }
+    .doc-footer-note{ margin-top:18px; font-size:9.5px; color:var(--ink-soft); text-align:center; border-top:1px solid var(--line); padding-top:8px; }
+    @media print{
+      body{ padding:0; }
+      @page{
+        margin:16mm 14mm 20mm;
+        @bottom-center{ content:"ETERNALGY SDN. BHD. (1523087-A)  ·  Page " counter(page) " of " counter(pages); font-family:'IBM Plex Mono', monospace; font-size:8.5px; color:#5E7069; }
+      }
+    }
   </style></head><body>
     ${bodyHtml}
   </body></html>`);
@@ -1862,15 +2100,26 @@ function readFileAsDataUrl(file){
   });
 }
 
-function openPdfExport(){
-  pdfExportData = buildPdfExportContent(currentPage);
+function openPdfExport(page, param){
+  pdfExportData = buildPdfExportContent(page || currentPage, param);
   renderPdfExport();
 }
 
 function renderPdfExport(){
   const root = document.getElementById('pdfExportRoot');
   if(!pdfExportData){ root.innerHTML = ''; return; }
-  const generated = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  // custom:true (currently only the GITA Calculator report) supplies its own
+  // complete, self-styled layout and skips the shared letterhead/doc-control/
+  // sign-off chrome that every other module's report uses.
+  const printArea = pdfExportData.custom ? pdfExportData.bodyHtml : `
+    <div class="report-doc">
+      ${letterheadHtml()}
+      <div class="letterhead-rule"></div>
+      ${docControlBlockHtml(pdfExportData.docNo)}
+      <h1>${escapeHtml(pdfExportData.title)}</h1>
+      ${pdfExportData.bodyHtml}
+      ${signOffBlockHtml()}
+    </div>`;
   root.innerHTML = `
     <div class="modal-overlay" id="pdfExportOverlay">
       <div class="modal-box" style="max-width:840px;">
@@ -1879,11 +2128,7 @@ function renderPdfExport(){
           <button type="button" class="modal-close" id="pdfExportCloseBtn">✕</button>
         </div>
         <div id="printArea">
-          <div class="report-doc">
-            <h1>Eternalgy C&amp;I — ${escapeHtml(pdfExportData.title)}</h1>
-            <p class="report-doc-sub">Generated ${generated}</p>
-            ${pdfExportData.bodyHtml}
-          </div>
+          ${printArea}
         </div>
         <div class="modal-actions no-print">
           <button type="button" class="btn btn-ghost" id="pdfExportCloseBtn2">Close</button>
@@ -1893,10 +2138,38 @@ function renderPdfExport(){
     </div>`;
 }
 
-function buildPdfExportContent(page){
+function buildPdfExportContent(page, param){
   const rm = n => 'RM ' + Math.round(n||0).toLocaleString();
   const val = id => { const el = document.getElementById(id); return el ? el.value : ''; };
   const resultsHtml = id => { const el = document.getElementById(id); return (el && el.innerHTML.trim()) ? el.innerHTML : '<p style="color:var(--ink-soft); font-size:13px;">No calculation run yet — go back, fill in the numbers and click Calculate before exporting.</p>'; };
+
+  if(page === 'materialsSite'){
+    const client = state.clients.find(c => c.id === param);
+    if(!client) return { title: 'Material List', bodyHtml: '<p>Client not found.</p>' };
+    const rows = (client.materials||[]).map(m => {
+      const lineTotal = (m.qty||0) * (m.price||0);
+      return `<tr><td>${escapeHtml(m.name||'—')}</td><td>${escapeHtml(m.supplier||'—')}</td>
+        <td>${m.qty||0} ${escapeHtml(m.unit||'')}</td><td>${rm(m.price)}</td><td>${rm(lineTotal)}</td></tr>`;
+    }).join('') || `<tr><td colspan="5" style="text-align:center; color:var(--ink-soft);">No materials listed yet.</td></tr>`;
+    const grandTotal = (client.materials||[]).reduce((sum,m)=> sum + (m.qty||0)*(m.price||0), 0);
+    const quotedPrice = client.quotedPrice || 0;
+    const profit = quotedPrice - grandTotal;
+    const marginPct = quotedPrice > 0 ? (profit / quotedPrice * 100) : null;
+    return { title: `Material List — ${client.name}`, docNo: docControlNo('MATL', client.id), bodyHtml: `
+      <div class="report-doc-grid">
+        <div class="report-doc-field"><label>Site / Client</label><div>${escapeHtml(client.name)}</div></div>
+        <div class="report-doc-field"><label>Address</label><div>${escapeHtml(client.address||'—')}</div></div>
+        <div class="report-doc-field"><label>System size</label><div>${client.systemSize ? client.systemSize+' kWp' : '—'}</div></div>
+        <div class="report-doc-field"><label>Quoted price</label><div>${quotedPrice ? rm(quotedPrice) : '—'}</div></div>
+      </div>
+      <table><thead><tr><th>Material</th><th>Supplier</th><th>Qty</th><th>Unit price</th><th>Line total</th></tr></thead>
+      <tbody>${rows}</tbody></table>
+      <div class="report-doc-stats" style="margin-top:16px;">
+        <div class="stat"><div class="v">${rm(grandTotal)}</div><div class="l">Material Cost</div></div>
+        <div class="stat"><div class="v">${quotedPrice ? rm(profit) : '—'}</div><div class="l">Gross Profit</div></div>
+        <div class="stat"><div class="v">${marginPct!==null ? marginPct.toFixed(1)+'%' : '—'}</div><div class="l">Profit Margin</div></div>
+      </div>` };
+  }
 
   if(page === 'pipeline'){
     const leads = state.leads;
@@ -1911,7 +2184,7 @@ function buildPdfExportContent(page){
         <td>${rm(l.projectAmount)}</td><td>${l.probability||0}%</td>
         <td>${escapeHtml(l.expectedCloseDate||'—')}</td><td>${escapeHtml(l.scheme||'—')}</td>
       </tr>`).join('') || `<tr><td colspan="6" style="text-align:center; color:var(--ink-soft);">No deals yet.</td></tr>`;
-    return { title: 'Sales Pipeline Report', bodyHtml: `
+    return { title: 'Sales Pipeline Report', docNo: docControlNo('SALES'), bodyHtml: `
       <div class="report-doc-stats">
         <div class="stat"><div class="v">${leads.length}</div><div class="l">Total Deals</div></div>
         <div class="stat"><div class="v">${rm(pipelineValue)}</div><div class="l">Pipeline Value</div></div>
@@ -1928,7 +2201,7 @@ function buildPdfExportContent(page){
       return `<tr><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.address||'—')}</td><td>${escapeHtml(c.agent||'—')}</td>
         <td>${c.systemSize||'—'} kWp</td><td>${c.quotedPrice?rm(c.quotedPrice):'—'}</td><td>${prog.pct}% (${prog.done}/${prog.total})</td></tr>`;
     }).join('') || `<tr><td colspan="6" style="text-align:center; color:var(--ink-soft);">No clients yet.</td></tr>`;
-    return { title: 'Project Management Report', bodyHtml: `
+    return { title: 'Project Management Report', docNo: docControlNo('PROJ'), bodyHtml: `
       <table><thead><tr><th>Client</th><th>Address</th><th>Agent</th><th>System Size</th><th>Quoted Price</th><th>Progress</th></tr></thead>
       <tbody>${rows}</tbody></table>` };
   }
@@ -1942,24 +2215,68 @@ function buildPdfExportContent(page){
       return `<tr><td>${escapeHtml(c.name)}</td><td>${quoted?rm(quoted):'—'}</td><td>${rm(cost)}</td>
         <td>${quoted?rm(profit):'—'}</td><td>${margin!==null?margin.toFixed(1)+'%':'—'}</td></tr>`;
     }).join('') || `<tr><td colspan="5" style="text-align:center; color:var(--ink-soft);">No clients yet.</td></tr>`;
-    return { title: 'Material List & Profit Margin Report', bodyHtml: `
+    return { title: 'Material List & Profit Margin Report', docNo: docControlNo('MATL'), bodyHtml: `
       <table><thead><tr><th>Client</th><th>Quoted Price</th><th>Material Cost</th><th>Gross Profit</th><th>Margin</th></tr></thead>
       <tbody>${rows}</tbody></table>` };
   }
 
   if(page === 'design'){
-    return { title: 'Solar Design Estimate', bodyHtml: `
+    const tariffCatEl = document.getElementById('dsTariffCat');
+    const tariffCatLabel = tariffCatEl ? tariffCatEl.options[tariffCatEl.selectedIndex].text : '';
+    return { title: 'Solar Design — Sizing Estimate', docNo: docControlNo('DSGN'), bodyHtml: `
       <div class="report-doc-grid">
-        <div class="report-doc-field"><label>Avg. monthly consumption</label><div>${val('dsConsumption')} kWh</div></div>
+        <div class="report-doc-field"><label>Client name</label><div>${val('dsClientName') || '—'}</div></div>
+        <div class="report-doc-field"><label>Agent</label><div>${val('dsAgentName') || '—'}</div></div>
+        <div class="report-doc-field"><label>Site address</label><div>${val('dsAddress') || '—'}</div></div>
+        <div class="report-doc-field"><label>Site location</label><div>${val('dsLocation') || '—'}</div></div>
+        <div class="report-doc-field"><label>Tariff category (RP4)</label><div>${tariffCatLabel} (${val('dsTariffRate')} RM/kWh)</div></div>
         <div class="report-doc-field"><label>Peak sun hours / day</label><div>${val('dsPSH')}</div></div>
+        <div class="report-doc-field"><label>Consumption</label><div>${val('dsConsumption')} kWh/month</div></div>
+        <div class="report-doc-field"><label>Maximum demand</label><div>${val('dsMaxDemand')} kW</div></div>
+        <div class="report-doc-field"><label>Client working days</label><div>${val('dsWorkDays')} days/month</div></div>
+        <div class="report-doc-field"><label>Roof space available</label><div>${val('dsRoofArea') || '—'} m²</div></div>
         <div class="report-doc-field"><label>Panel wattage</label><div>${val('dsPanelW')} Wp</div></div>
-        <div class="report-doc-field"><label>System losses</label><div>${val('dsLoss')}%</div></div>
       </div>
-      <div class="report-doc-section"><h3>Result</h3>${resultsHtml('dsResults')}</div>` };
+      <div class="report-doc-section"><h3>Size From Consumption &amp; Demand</h3>${resultsHtml('dsResults')}</div>
+      <div class="report-doc-section"><h3>Savings From Known System Size (${val('dsSizeKnown')} kWp)</h3>${resultsHtml('dsSizeKnownResults')}</div>` };
+  }
+
+  if(page === 'designCalc1'){
+    const tariffCatEl = document.getElementById('dsTariffCat');
+    const tariffCatLabel = tariffCatEl ? tariffCatEl.options[tariffCatEl.selectedIndex].text : '';
+    return { title: 'Solar Design — Size From Consumption & Demand', docNo: docControlNo('DSGN1'), bodyHtml: `
+      <div class="report-doc-grid">
+        <div class="report-doc-field"><label>Client name</label><div>${val('dsClientName') || '—'}</div></div>
+        <div class="report-doc-field"><label>Agent</label><div>${val('dsAgentName') || '—'}</div></div>
+        <div class="report-doc-field"><label>Site address</label><div>${val('dsAddress') || '—'}</div></div>
+        <div class="report-doc-field"><label>Site location</label><div>${val('dsLocation') || '—'}</div></div>
+        <div class="report-doc-field"><label>Tariff category (RP4)</label><div>${tariffCatLabel} (${val('dsTariffRate')} RM/kWh)</div></div>
+        <div class="report-doc-field"><label>Peak sun hours / day</label><div>${val('dsPSH')}</div></div>
+        <div class="report-doc-field"><label>Consumption</label><div>${val('dsConsumption')} kWh/month</div></div>
+        <div class="report-doc-field"><label>Maximum demand</label><div>${val('dsMaxDemand')} kW</div></div>
+        <div class="report-doc-field"><label>Client working days</label><div>${val('dsWorkDays')} days/month</div></div>
+        <div class="report-doc-field"><label>Roof space available</label><div>${val('dsRoofArea') || '—'} m²</div></div>
+        <div class="report-doc-field"><label>Panel wattage</label><div>${val('dsPanelW')} Wp</div></div>
+      </div>
+      <div class="report-doc-section"><h3>Size From Consumption &amp; Demand</h3>${resultsHtml('dsResults')}</div>` };
+  }
+
+  if(page === 'designCalc2'){
+    return { title: 'Solar Design — Savings From Known System Size', docNo: docControlNo('DSGN2'), bodyHtml: `
+      <div class="report-doc-grid">
+        <div class="report-doc-field"><label>Client name</label><div>${val('dsClientName') || '—'}</div></div>
+        <div class="report-doc-field"><label>Agent</label><div>${val('dsAgentName') || '—'}</div></div>
+        <div class="report-doc-field"><label>Site address</label><div>${val('dsAddress') || '—'}</div></div>
+        <div class="report-doc-field"><label>System size</label><div>${val('dsSizeKnown')} kWp</div></div>
+        <div class="report-doc-field"><label>Panel wattage</label><div>${val('dsSizeKnownPanelW')} Wp</div></div>
+        <div class="report-doc-field"><label>Working days / month</label><div>${val('dsSizeKnownWorkDays')}</div></div>
+        <div class="report-doc-field"><label>Peak sun hours / day</label><div>${val('dsPSH')}</div></div>
+      </div>
+      <div class="report-doc-section"><h3>Savings From Known System Size (${val('dsSizeKnown')} kWp)</h3>${resultsHtml('dsSizeKnownResults')}</div>` };
   }
 
   if(page === 'savings'){
-    return { title: 'Savings Analysis', bodyHtml: `
+    return { title: 'Savings Analysis', docNo: docControlNo('SAV'), bodyHtml: `
       <div class="report-doc-grid">
         <div class="report-doc-field"><label>System cost</label><div>RM ${val('svCost')}</div></div>
         <div class="report-doc-field"><label>Current monthly bill</label><div>RM ${val('svBill')}</div></div>
@@ -1969,13 +2286,20 @@ function buildPdfExportContent(page){
       <div class="report-doc-section"><h3>Result</h3>${resultsHtml('svResults')}</div>` };
   }
 
+  if(page === 'gitaCalc'){
+    // This report has its own dedicated one-page design (see buildGitaCalcReportHtml)
+    // instead of the shared letterhead/report-doc chrome used by every other module —
+    // custom:true tells renderPdfExport/printDocument to skip that shared wrapper.
+    return { title: 'GITA Calculator — Investment ROI Analysis', docNo: docControlNo('GITAC'), custom: true, bodyHtml: buildGitaCalcReportHtml() };
+  }
+
   if(page === 'gita'){
     const rows = state.gitaCustomers.map(g=>`<tr>
         <td>${escapeHtml(g.name)}</td><td>${escapeHtml(g.agent||'—')}</td><td>${escapeHtml(g.pic||'—')}</td>
         <td>${escapeHtml(g.status)}</td><td>${escapeHtml(g.dateReceived||'—')}</td><td>${escapeHtml(g.dateReturned||'—')}</td>
         <td>${escapeHtml(g.notes||'—')}</td>
       </tr>`).join('') || `<tr><td colspan="7" style="text-align:center; color:var(--ink-soft);">No GITA customers yet.</td></tr>`;
-    return { title: 'GITA Application Doc Checklist Report', bodyHtml: `
+    return { title: 'GITA Application Doc Checklist Report', docNo: docControlNo('GITA'), bodyHtml: `
       <table><thead><tr><th>Customer</th><th>Agent</th><th>PIC</th><th>Status</th><th>Received</th><th>Returned</th><th>Remarks</th></tr></thead>
       <tbody>${rows}</tbody></table>` };
   }
@@ -1986,7 +2310,7 @@ function buildPdfExportContent(page){
         <td>${escapeHtml(r.dateInstallation||'—')}</td><td>${escapeHtml(r.supervisor||'—')}</td>
         <td>${r.photos&&r.photos.length ? r.photos.length : 0}</td>
       </tr>`).join('') || `<tr><td colspan="6" style="text-align:center; color:var(--ink-soft);">No installation reports yet.</td></tr>`;
-    return { title: 'Installation Reports Overview', bodyHtml: `
+    return { title: 'Installation Reports Overview', docNo: docControlNo('INST'), bodyHtml: `
       <table><thead><tr><th>Site</th><th>Address</th><th>Agent</th><th>Install Date</th><th>Supervisor</th><th>Photos</th></tr></thead>
       <tbody>${rows}</tbody></table>
       <p style="font-size:11.5px; color:var(--ink-soft); margin-top:10px;">For a full 1-page report of a single site (with photos), use "See Report" on that site's card instead.</p>` };
@@ -1994,7 +2318,7 @@ function buildPdfExportContent(page){
 
   if(page === 'kpi'){
     const k = calcKPI();
-    return { title: 'KPI — C&I Department Report', bodyHtml: `
+    return { title: 'KPI — C&I Department Report', docNo: docControlNo('KPI'), bodyHtml: `
       <div class="report-doc-stats">
         <div class="stat"><div class="v">${rm(k.target)}</div><div class="l">Yearly Target</div></div>
         <div class="stat"><div class="v">${rm(k.actualSales)}</div><div class="l">Actual Sales</div></div>
@@ -2007,14 +2331,37 @@ function buildPdfExportContent(page){
       </div>` };
   }
 
-  return { title: 'Report', bodyHtml: '<p>No data.</p>' };
+  if(page === 'guidelines'){
+    const cats = [...new Set(state.guidelines.map(g=>g.category||'General'))].sort();
+    const sections = cats.map(cat=>{
+      const items = state.guidelines.filter(g=>(g.category||'General')===cat);
+      const itemsHtml = items.map(g=>`
+        <div style="margin-bottom:14px;">
+          <p style="font-weight:600; margin:0 0 4px;">${escapeHtml(g.title||'Untitled')}</p>
+          <p style="white-space:pre-line; margin:0;">${escapeHtml(g.content||'')}</p>
+        </div>`).join('');
+      return `<div class="report-doc-section"><h3>${escapeHtml(cat)}</h3>${itemsHtml}</div>`;
+    }).join('') || `<p style="color:var(--ink-soft); font-size:13px;">No guidelines added yet.</p>`;
+    return { title: 'C&I Department Guidelines', docNo: docControlNo('GDL'), bodyHtml: sections };
+  }
+
+  if(page === 'weeklyReports'){
+    return { title: `Weekly Job Report — Week ${wrView.week}, ${wrView.year}`, docNo: docControlNo('WKLY', `${wrView.year}W${wrView.week}`), bodyHtml: buildWeeklyReportDocHtml() };
+  }
+
+  return { title: 'Report', docNo: docControlNo('GEN'), bodyHtml: '<p>No data.</p>' };
 }
 
 document.addEventListener('click', e=>{
-  if(e.target.closest('[data-pdf-export-btn]')){ openPdfExport(); return; }
+  const siteBtn = e.target.closest('[data-pdf-export-site-btn]');
+  if(siteBtn){ openPdfExport('materialsSite', parseInt(siteBtn.dataset.pdfExportSiteBtn)); return; }
+  const pdfBtn = e.target.closest('[data-pdf-export-btn]');
+  if(pdfBtn){ openPdfExport(pdfBtn.dataset.pdfExportPage || undefined); return; }
   if(e.target.closest('#pdfExportPrintBtn')){
-    const generated = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-    printDocument(pdfExportData.title, `<h1>Eternalgy C&amp;I — ${escapeHtml(pdfExportData.title)}</h1><p class="report-doc-sub">Generated ${generated}</p>${pdfExportData.bodyHtml}`);
+    const printHtml = pdfExportData.custom
+      ? pdfExportData.bodyHtml
+      : `${letterheadHtml()}<div class="letterhead-rule"></div><div class="report-doc">${docControlBlockHtml(pdfExportData.docNo)}<h1>${escapeHtml(pdfExportData.title)}</h1>${pdfExportData.bodyHtml}${signOffBlockHtml()}</div>`;
+    printDocument(pdfExportData.title, printHtml);
     return;
   }
   if(e.target.closest('#pdfExportCloseBtn') || e.target.closest('#pdfExportCloseBtn2') || e.target.id === 'pdfExportOverlay'){
@@ -2035,10 +2382,10 @@ function stageProgress(client){
 function ringSVG(pct){
   const r = 24, c = 2*Math.PI*r;
   const offset = c - (pct/100)*c;
-  const color = pct >= 100 ? '#2E9E6D' : '#F0A93E';
+  const color = pct >= 100 ? 'var(--green)' : 'var(--amber)';
   return `<svg width="56" height="56" viewBox="0 0 56 56">
-    <circle cx="28" cy="28" r="${r}" fill="none" stroke="#DCE6DE" stroke-width="6"/>
-    <circle cx="28" cy="28" r="${r}" fill="none" stroke="${color}" stroke-width="6"
+    <circle cx="28" cy="28" r="${r}" fill="none" style="stroke:var(--line)" stroke-width="6"/>
+    <circle cx="28" cy="28" r="${r}" fill="none" style="stroke:${color}" stroke-width="6"
       stroke-dasharray="${c}" stroke-dashoffset="${offset}" stroke-linecap="round"
       transform="rotate(-90 28 28)"/>
   </svg>`;
@@ -2203,9 +2550,9 @@ function renderMaterials(){
     currentMaterialsClientId = searchClients[0].id;
   }
   const client = state.clients.find(c => c.id === currentMaterialsClientId);
-  const chips = searchClients.map(c =>
-    `<button type="button" class="client-chip ${c.id===currentMaterialsClientId?'active':''}" data-select-client="${c.id}">${escapeHtml(c.name)}</button>`
-  ).join('');
+  const multiMatchNote = (q && searchClients.length > 1)
+    ? `<p style="font-size:12px; color:var(--ink-soft); margin:10px 0 0;">${searchClients.length} sites match "${escapeHtml(matSearchQuery)}" — showing <strong>${escapeHtml(client ? client.name : '')}</strong>. Narrow your search for a different one.</p>`
+    : '';
 
   let body = '';
   if(!state.clients.length){
@@ -2238,7 +2585,10 @@ function renderMaterials(){
     if(!client.systemSize) missing.push('system size (kWp)');
 
     body = `
-      <p style="font-size:13px; color:var(--ink-soft); margin:0 0 10px;">Editing materials for <strong style="color:var(--navy);">${escapeHtml(client.name)}</strong></p>
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
+        <p style="font-size:13px; color:var(--ink-soft); margin:0;">Editing materials for <strong style="color:var(--navy);">${escapeHtml(client.name)}</strong></p>
+        <button class="btn btn-ghost" type="button" data-pdf-export-site-btn="${client.id}">⬇ Export as PDF</button>
+      </div>
       <div class="panel">
         <table>
           <thead><tr><th>Material</th><th>Supplier</th><th>Qty</th><th>Unit</th><th>Unit price (RM)</th><th>Line total</th><th></th></tr></thead>
@@ -2285,7 +2635,7 @@ function renderMaterials(){
         <button class="btn btn-ghost" type="button" id="matSearchBtn">Search</button>
         ${matSearchQuery ? `<button class="btn btn-ghost" type="button" id="matSearchClearBtn">✕ Clear</button>` : ''}
       </div>
-      <div class="client-picker-row">${chips || '<span style="font-size:12.5px;color:var(--ink-soft);">No matches</span>'}</div>
+      ${multiMatchNote}
     </div>
     ${body}
   `;
@@ -2393,6 +2743,9 @@ function renderDealReportView(){
       </div>
       <div id="printArea">
         <div class="report-doc">
+          ${letterheadHtml()}
+          <div class="letterhead-rule"></div>
+          ${docControlBlockHtml(docControlNo('DEAL', l.id))}
           <h1>${escapeHtml(l.name || '(Untitled site)')}</h1>
           <p class="report-doc-sub">Sales Deal Report · Stage: ${escapeHtml(l.stage||'—')}</p>
 
@@ -2438,6 +2791,7 @@ function renderDealReportView(){
               ${l.panelLayouts.map(p=>`<img src="${p.dataUrl}" alt="${escapeAttr(p.name||'panel layout')}">`).join('')}
             </div>
           </div>` : ''}
+          ${signOffBlockHtml()}
         </div>
       </div>
       <div class="modal-actions no-print">
@@ -2534,7 +2888,7 @@ function renderDealModal(){
         <div class="field"><label>Notes / Latest Discussion</label><textarea id="dealNotes" rows="3">${lead ? escapeHtml(lead.notes) : ''}</textarea></div>
         <div class="field" style="display:flex; align-items:center; gap:8px;">
           <input type="checkbox" id="dealQualified" style="width:auto;" ${lead && lead.qualified ? 'checked' : ''}>
-          <label style="margin:0; text-transform:none; letter-spacing:0; font-weight:500; color:var(--ink);" for="dealQualified">Qualified (TNB bill &amp; roof capacity checked) — counts toward Module 08 Qualified Pipeline</label>
+          <label style="margin:0; text-transform:none; letter-spacing:0; font-weight:500; color:var(--ink);" for="dealQualified">Qualified (TNB bill &amp; roof capacity checked) — counts toward Module 09 Qualified Pipeline</label>
         </div>
       </div>
       ${photosHtml}
@@ -2557,39 +2911,212 @@ function renderDesign(){
     <div class="page-head">
       <div>
         <p class="eyebrow">Module 04</p><h2>Solar Design</h2>
-        <p>Quick sizing estimate based on monthly consumption and site conditions. Use for early-stage proposals — confirm with a full shading and structural study before quoting.</p>
+        <p>Sizing estimate based on the Input &amp; Sizing sheet — max demand, usage and roof area methods, plus generation vs MAQ. Use for early-stage proposals — confirm with a full shading and structural study before quoting.</p>
       </div>
       <button class="btn btn-ghost" type="button" data-pdf-export-btn>⬇ Export as PDF</button>
     </div>
     <div class="panel">
+      <h3 style="margin:0 0 12px; font-size:14px; color:var(--navy);">Site Summary</h3>
+      <p style="font-size:11.5px; color:var(--ink-soft); margin:-4px 0 12px;">For this module's own reference and PDF exports only — not synced with Sales Pipeline, Project Management or any other module.</p>
       <div class="row">
-        <div class="field"><label>Avg. monthly consumption (kWh)</label><input type="number" id="dsConsumption" min="0" value="2500"></div>
-        <div class="field"><label>Peak sun hours / day</label><input type="number" id="dsPSH" min="1" step="0.1" value="3.8"></div>
-        <div class="field"><label>Panel wattage (Wp)</label><input type="number" id="dsPanelW" min="1" value="550"></div>
-        <div class="field"><label>System losses (%)</label><input type="number" id="dsLoss" min="0" max="50" value="15"></div>
+        <div class="field"><label>Client name</label><input type="text" id="dsClientName" placeholder="e.g. Tan Solar Sdn Bhd"></div>
+        <div class="field"><label>Agent</label><input type="text" id="dsAgentName" placeholder="e.g. Ahmad"></div>
+        <div class="field"><label>Site address</label><input type="text" id="dsAddress" placeholder="e.g. Lot 12, Jalan Perindustrian, Johor Bahru"></div>
       </div>
-      <button class="btn btn-primary" id="dsCalcBtn">Calculate system size</button>
+
+      <hr style="border:none; border-top:1px solid var(--line); margin:20px 0;">
+      <h3 style="margin:0 0 12px; font-size:14px; color:var(--navy);">Site &amp; Tariff</h3>
+      <div class="notice">Tariff categories below follow TNB's current <strong>RP4</strong> structure (1 Jul 2025 – 31 Dec 2027), which replaced the old A/B/C1/C2/D/E1/E2 letter codes. Rates shown are indicative reference rates — always confirm the exact rate against the client's latest TNB bill before quoting.</div>
+      <div class="row">
+        <div class="field"><label>Site location</label><input type="text" id="dsLocation" placeholder="e.g. Johor Bahru"></div>
+        <div class="field"><label>Tariff category (RP4)</label>
+          <select id="dsTariffCat">
+            <option value="LV_GEN">Low Voltage — General</option>
+            <option value="LV_TOU">Low Voltage — ToU</option>
+            <option value="MV_GEN">Medium Voltage — General</option>
+            <option value="MV_TOU">Medium Voltage — ToU</option>
+            <option value="HV_GEN">High Voltage — General</option>
+            <option value="HV_TOU">High Voltage — ToU</option>
+          </select>
+        </div>
+        <div class="field"><label>Effective tariff rate (RM/kWh)</label><input type="number" id="dsTariffRate" min="0" step="0.001" value="0.454"></div>
+        <div class="field"><label>Scheme</label>
+          <select id="dsScheme">
+            <option value="">— Select —</option>
+            <option value="ATAP">ATAP</option>
+            <option value="SELCO">SELCO</option>
+          </select>
+        </div>
+        <div class="field"><label>Peak sun hours / day</label><input type="number" id="dsPSH" min="0.5" step="0.1" value="3.5"></div>
+      </div>
+      <p style="font-size:11px; color:var(--ink-soft); margin:-6px 0 4px;" id="dsTariffNote">Low Voltage: capacity &amp; network charges are already billed per kWh, so this is close to the all-in rate. General tariff — same rate all day.</p>
+      <p style="font-size:11px; color:var(--ink-soft); margin:2px 0 4px;">Pick a Scheme to auto-fill peak sun hours and estimate solar usage below (ATAP: 3.2 PSH / 90% · SELCO: 3.0 PSH / 85%) — adjust manually anytime after.</p>
+
+      <hr style="border:none; border-top:1px solid var(--line); margin:22px 0;">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+        <div>
+          <h3 style="margin:0 0 4px; font-size:15px; color:var(--navy);">① Size from consumption &amp; demand</h3>
+          <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 14px;">Use this when you have the client's TNB bill — sizes the system from max demand, usage or roof area.</p>
+        </div>
+        <button class="btn btn-ghost" type="button" data-pdf-export-btn data-pdf-export-page="designCalc1" style="flex-shrink:0;">⬇ Export as PDF</button>
+      </div>
+      <h3 style="margin:20px 0 12px; font-size:14px; color:var(--navy);">Consumption &amp; Demand</h3>
+      <div class="row">
+        <div class="field"><label>Consumption (kWh/month)</label><input type="number" id="dsConsumption" min="0" value="3500"></div>
+        <div class="field"><label>Maximum demand (kW)</label><input type="number" id="dsMaxDemand" min="0" value="48"></div>
+        <div class="field"><label>Client working days / month</label><input type="number" id="dsWorkDays" min="1" max="31" value="30"></div>
+        <div class="field"><label>Estimate solar usage (%)</label><input type="number" id="dsSolarUsage" min="0" max="100" value="85"></div>
+      </div>
+      <h3 style="margin:20px 0 12px; font-size:14px; color:var(--navy);">Roof &amp; Panel</h3>
+      <div class="row">
+        <div class="field"><label>Roof space available (m²) — optional</label><input type="number" id="dsRoofArea" min="0" value="0"></div>
+        <div class="field"><label>Panel wattage (Wp)</label><input type="number" id="dsPanelW" min="1" value="650"></div>
+        <div class="field"><label>Est. project cost (RM) — optional</label><input type="number" id="dsProjectCost" min="0" value="0"></div>
+      </div>
+      <button class="btn btn-primary" id="dsCalcBtn">Calculate sizing</button>
       <div id="dsResults"></div>
+
+      <hr style="border:none; border-top:1px solid var(--line); margin:28px 0;">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+        <div>
+          <h3 style="margin:0 0 4px; font-size:15px; color:var(--navy);">② Savings from a known system size</h3>
+          <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 14px;">Use this when the system size (kWp) is already decided (or the client doesn't have a TNB bill on hand) — works out generation and savings directly from the kWp.</p>
+        </div>
+        <button class="btn btn-ghost" type="button" data-pdf-export-btn data-pdf-export-page="designCalc2" style="flex-shrink:0;">⬇ Export as PDF</button>
+      </div>
+      <div class="row">
+        <div class="field"><label>System size (kWp)</label><input type="number" id="dsSizeKnown" min="0" step="0.01" value="30"></div>
+        <div class="field"><label>Panel wattage (Wp)</label><input type="number" id="dsSizeKnownPanelW" min="1" value="650"></div>
+        <div class="field"><label>Working days / month</label><input type="number" id="dsSizeKnownWorkDays" min="1" max="31" value="30"></div>
+        <div class="field"><label>Estimate solar usage (%)</label><input type="number" id="dsSizeKnownSolarUsage" min="0" max="100" value="85"></div>
+      </div>
+      <button class="btn btn-primary" id="dsSizeKnownCalcBtn">Calculate savings</button>
+      <div id="dsSizeKnownResults"></div>
     </div>
   `;
 }
+const SOLAR_SCHEME_PRESETS = {
+  ATAP:  { psh: 3.2, usagePct: 90 },
+  SELCO: { psh: 3.0, usagePct: 85 },
+};
+document.addEventListener('change', e=>{
+  if(e.target && e.target.id === 'dsScheme'){
+    const preset = SOLAR_SCHEME_PRESETS[e.target.value];
+    if(!preset) return;
+    const pshEl = document.getElementById('dsPSH');
+    const usage1El = document.getElementById('dsSolarUsage');
+    const usage2El = document.getElementById('dsSizeKnownSolarUsage');
+    if(pshEl) pshEl.value = preset.psh;
+    if(usage1El) usage1El.value = preset.usagePct;
+    if(usage2El) usage2El.value = preset.usagePct;
+  }
+});
+const RP4_TARIFF_RATES = {
+  LV_GEN: { rate: 0.454, note: 'Low Voltage: capacity & network charges are already billed per kWh, so this is close to the all-in rate. General tariff — same rate all day.' },
+  LV_TOU: { rate: 0.470, note: "Low Voltage ToU: peak 2pm–10pm weekdays is billed higher, off-peak (incl. weekends/holidays) lower. Rate shown is an indicative blended average — adjust to match the client's bill." },
+  MV_GEN: { rate: 0.365, note: 'Medium Voltage General: energy charge only. Capacity + Network (~RM89.27/kW of max demand) is billed separately and is usually not reduced by solar alone — mention this when discussing total bill savings.' },
+  MV_TOU: { rate: 0.440, note: 'Medium Voltage ToU: Peak (2pm–10pm weekdays) ≈ RM0.52/kWh, Off-Peak ≈ RM0.36/kWh — rate shown is a blended estimate. Capacity + Network (~RM97.06/kW of peak max demand) billed separately.' },
+  HV_GEN: { rate: 0.335, note: 'High Voltage General: energy charge only. Capacity + Network (~RM44.82/kW of max demand) billed separately.' },
+  HV_TOU: { rate: 0.335, note: 'High Voltage ToU: Peak/Off-Peak split applies to the energy portion — rate shown is a blended estimate. Capacity + Network billed separately.' },
+};
+document.addEventListener('change', e=>{
+  if(e.target && e.target.id === 'dsTariffCat'){
+    const rateEl = document.getElementById('dsTariffRate');
+    const noteEl = document.getElementById('dsTariffNote');
+    const info = RP4_TARIFF_RATES[e.target.value];
+    if(rateEl && info) rateEl.value = info.rate;
+    if(noteEl && info) noteEl.textContent = info.note;
+  }
+});
 function calcDesign(){
   const consumption = parseFloat(document.getElementById('dsConsumption').value) || 0;
   const psh = parseFloat(document.getElementById('dsPSH').value) || 1;
   const panelW = parseFloat(document.getElementById('dsPanelW').value) || 1;
-  const lossPct = parseFloat(document.getElementById('dsLoss').value) || 0;
-  const dailyKwh = consumption / 30;
-  const derate = 1 - (lossPct/100);
-  const systemKw = dailyKwh / (psh * derate);
-  const panelCount = Math.ceil((systemKw*1000) / panelW);
-  const actualKw = (panelCount * panelW)/1000;
-  const annualGen = actualKw * psh * 365 * derate;
+  const workDays = parseFloat(document.getElementById('dsWorkDays').value) || 30;
+  const maxDemand = parseFloat(document.getElementById('dsMaxDemand').value) || 0;
+  const solarUsagePct = parseFloat(document.getElementById('dsSolarUsage').value) || 0;
+  const roofArea = parseFloat(document.getElementById('dsRoofArea').value) || 0;
+  const tariffRate = parseFloat(document.getElementById('dsTariffRate').value) || 0;
+  const projectCost = parseFloat(document.getElementById('dsProjectCost').value) || 0;
+
+  const dailyConsumption = consumption / workDays;
+  const AREA_DENSITY = 6.34; // m2 per kWp, per Input & Sizing sheet
+
+  const sizeByDemand = maxDemand * 1.35;
+  const sizeByUsage = dailyConsumption / psh;
+  const sizeByArea = roofArea > 0 ? (roofArea / AREA_DENSITY) : null;
+
+  // Pre-fill "Propose capacity" the first time only, so re-calculating after a manual edit doesn't overwrite it
+  const proposeEl = document.getElementById('dsProposeCapacity');
+  if(proposeEl && !proposeEl.dataset.touched){
+    proposeEl.value = sizeByDemand.toFixed(2);
+  }
+  const proposeCapacity = parseFloat((proposeEl && proposeEl.value) || sizeByDemand) || 0;
+
+  const panelCount = panelW > 0 ? Math.ceil((proposeCapacity*1000) / panelW) : 0;
+  const dailyMAQ = proposeCapacity / 1.4 * 4.32;
+  const monthlyMAQ = dailyMAQ * workDays;
+  const monthlyGeneration = proposeCapacity * psh * workDays;
+  const excessKwh = monthlyGeneration - monthlyMAQ;
+  const excessPct = monthlyGeneration > 0 ? (excessKwh / monthlyGeneration * 100) : 0;
+  const priceKwp = (proposeCapacity > 0 && projectCost > 0) ? (projectCost / proposeCapacity) : null;
+
   document.getElementById('dsResults').innerHTML = `
+    <h4 style="margin:20px 0 8px; font-size:14px; color:var(--navy);">Sizing suggestions</h4>
     <div class="result-strip">
-      <div class="result-tile"><div class="val">${actualKw.toFixed(2)} kWp</div><div class="lbl">Recommended system size</div></div>
+      <div class="result-tile"><div class="val">${sizeByDemand.toFixed(2)} kWp</div><div class="lbl">Based on max demand (×1.35)</div></div>
+      <div class="result-tile"><div class="val">${sizeByUsage.toFixed(2)} kWp</div><div class="lbl">Based on usage</div></div>
+      <div class="result-tile"><div class="val">${sizeByArea!==null ? sizeByArea.toFixed(2)+' kWp' : '—'}</div><div class="lbl">Based on roof area</div></div>
+    </div>
+    <div class="field" style="max-width:260px; margin-top:14px;">
+      <label>Propose capacity (kWp) — adjust as needed</label>
+      <input type="number" id="dsProposeCapacity" min="0" step="0.01" value="${proposeCapacity.toFixed(2)}" data-touched="1">
+    </div>
+    <button class="btn btn-primary no-print" id="dsRecalcBtn" style="margin-top:10px;">Recalculate from this capacity</button>
+    <h4 style="margin:20px 0 8px; font-size:14px; color:var(--navy);">Result at ${proposeCapacity.toFixed(2)} kWp</h4>
+    <div class="result-strip">
       <div class="result-tile"><div class="val">${panelCount}</div><div class="lbl">Panels required</div></div>
-      <div class="result-tile"><div class="val">${Math.round(annualGen).toLocaleString()} kWh</div><div class="lbl">Estimated annual generation</div></div>
-    </div>`;
+      <div class="result-tile"><div class="val">${Math.round(monthlyMAQ).toLocaleString()} kWh</div><div class="lbl">Estimate monthly MAQ</div></div>
+      <div class="result-tile"><div class="val">${Math.round(monthlyGeneration).toLocaleString()} kWh</div><div class="lbl">Estimate monthly generation</div></div>
+      <div class="result-tile"><div class="val" style="${excessKwh<0?'color:var(--amber);':''}">${Math.round(excessKwh).toLocaleString()} kWh</div><div class="lbl">Excess to TNB (${excessPct.toFixed(1)}%)</div></div>
+      ${priceKwp!==null ? `<div class="result-tile"><div class="val">RM ${Math.round(priceKwp).toLocaleString()}</div><div class="lbl">Price / kWp</div></div>` : ''}
+    </div>
+  `;
+  const recalcBtn = document.getElementById('dsRecalcBtn');
+  if(recalcBtn) recalcBtn.addEventListener('click', calcDesign);
+}
+// Calculation ② — go the other direction: user already knows the system
+// size (kWp), so work out estimated monthly generation and RM savings
+// directly, without needing a TNB bill's consumption/demand figures.
+function calcDesignFromSize(){
+  const sizeKwp = parseFloat(document.getElementById('dsSizeKnown').value) || 0;
+  const panelW = parseFloat(document.getElementById('dsSizeKnownPanelW').value) || 1;
+  const workDays = parseFloat(document.getElementById('dsSizeKnownWorkDays').value) || 30;
+  const solarUsagePct = parseFloat(document.getElementById('dsSizeKnownSolarUsage').value) || 0;
+  const psh = parseFloat(document.getElementById('dsPSH').value) || 1;
+  const tariffRate = parseFloat(document.getElementById('dsTariffRate').value) || 0;
+
+  const panelCount = panelW > 0 ? Math.ceil((sizeKwp*1000) / panelW) : 0;
+  const monthlyGeneration = sizeKwp * psh * workDays;
+  const usedGeneration = monthlyGeneration * (solarUsagePct/100);
+  const monthlySavings = usedGeneration * tariffRate;
+  const annualSavings = monthlySavings * 12;
+  const dailyMAQ = sizeKwp / 1.4 * 4.32;
+  const monthlyMAQ = dailyMAQ * workDays;
+  const excessKwh = monthlyGeneration - monthlyMAQ;
+
+  document.getElementById('dsSizeKnownResults').innerHTML = `
+    <h4 style="margin:20px 0 8px; font-size:14px; color:var(--navy);">Result at ${sizeKwp.toFixed(2)} kWp</h4>
+    <div class="result-strip">
+      <div class="result-tile"><div class="val">${panelCount}</div><div class="lbl">Panels required</div></div>
+      <div class="result-tile"><div class="val">${Math.round(monthlyGeneration).toLocaleString()} kWh</div><div class="lbl">Estimate monthly generation</div></div>
+      <div class="result-tile"><div class="val">${Math.round(usedGeneration).toLocaleString()} kWh</div><div class="lbl">Used to offset bill (${solarUsagePct}%)</div></div>
+      <div class="result-tile"><div class="val">RM ${Math.round(monthlySavings).toLocaleString()}</div><div class="lbl">Estimate monthly savings</div></div>
+      <div class="result-tile"><div class="val">RM ${Math.round(annualSavings).toLocaleString()}</div><div class="lbl">Estimate annual savings</div></div>
+      <div class="result-tile"><div class="val" style="${excessKwh<0?'color:var(--amber);':''}">${Math.round(excessKwh).toLocaleString()} kWh</div><div class="lbl">Excess to TNB vs. MAQ</div></div>
+    </div>
+    <p style="font-size:11px; color:var(--ink-soft); margin-top:10px;">Savings estimate = monthly generation × solar usage % × effective tariff rate. Actual savings depend on the client's real load profile, export arrangement (e.g. NEM), and the exact TNB tariff components — use this for early conversations, and confirm against a full analysis before quoting.</p>
+  `;
 }
 
 /* ---------------------------------------------------------
@@ -2636,8 +3163,312 @@ function calcSavings(){
 }
 
 /* ---------------------------------------------------------
-   PAGE — MODULE 06: GITA APPLICATION DOC CHECKLIST
+   PAGE — MODULE 06: GITA CALCULATOR
+   Green Investment Tax Allowance estimate — Capital Allowance (CA)
+   schedule + GITA offset, worked out from the system cost, income
+   tax rate and incentive category (No Battery 60% / With Battery 100%).
 --------------------------------------------------------- */
+// Standard Malaysia Capital Allowance schedule for plant & machinery:
+// Initial Allowance 20% + Annual Allowance 14% in year 1 (34% combined),
+// then 14% per year until the full 100% of cost has been claimed (the
+// final year takes only the remainder needed to reach exactly 100%).
+function gitaCaScheduleRates(){
+  const rates = [];
+  let cumulative = 0;
+  let year = 1;
+  while(cumulative < 100 - 1e-9){
+    let rate = year === 1 ? 34 : 14;
+    if(cumulative + rate > 100) rate = 100 - cumulative;
+    rates.push(rate);
+    cumulative += rate;
+    year++;
+  }
+  return rates;
+}
+function renderGitaCalc(){
+  return `
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">Module 06</p><h2>GITA Calculator</h2>
+        <p>Estimate the Capital Allowance and Green Investment Tax Allowance (GITA) offset for a solar project, and the resulting net cost &amp; ROI period.</p>
+      </div>
+      <button class="btn btn-ghost" type="button" data-pdf-export-btn>⬇ Export as PDF</button>
+    </div>
+    <div class="panel">
+      <h3 style="margin:0 0 12px; font-size:14px; color:var(--navy);">System Input</h3>
+      <div class="row">
+        <div class="field"><label>Solar PV system cost (RM)</label><input type="number" id="gcSystemCost" min="0" value="100000"></div>
+        <div class="field"><label>Income tax rate</label>
+          <select id="gcTaxRate">
+            <option value="15">15%</option>
+            <option value="17">17%</option>
+            <option value="24" selected>24%</option>
+          </select>
+        </div>
+        <div class="field"><label>Incentive category (GITA)</label>
+          <select id="gcCategory">
+            <option value="60">No Battery (60% offset)</option>
+            <option value="100">With Battery (100% offset)</option>
+          </select>
+        </div>
+        <div class="field"><label>Est. yearly bill savings (RM)</label><input type="number" id="gcAnnualSavings" min="0" value="20000"></div>
+      </div>
+      <button class="btn btn-primary" id="gcCalcBtn">Calculate</button>
+      <div id="gcResults"></div>
+    </div>
+  `;
+}
+function calcGitaCalculator(){
+  const systemCost = parseFloat(document.getElementById('gcSystemCost').value) || 0;
+  const taxRate = (parseFloat(document.getElementById('gcTaxRate').value) || 0) / 100;
+  const gitaWeight = (parseFloat(document.getElementById('gcCategory').value) || 0) / 100;
+  const annualSavings = parseFloat(document.getElementById('gcAnnualSavings').value) || 0;
+  const categoryLabel = document.getElementById('gcCategory').selectedOptions[0].text;
+
+  const rates = gitaCaScheduleRates();
+  let caRows = '', accumulatedCA = 0;
+  rates.forEach((rate, i)=>{
+    const amortized = systemCost * (rate/100);
+    const taxSaved = amortized * taxRate;
+    accumulatedCA += taxSaved;
+    caRows += `<tr><td>Year ${String(i+1).padStart(2,'0')}</td><td>${rate}%</td><td>${Math.round(amortized).toLocaleString()}</td><td>RM ${taxSaved.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`;
+  });
+
+  const gitaSaving = systemCost * gitaWeight * taxRate;
+  const totalSavings = accumulatedCA + gitaSaving;
+  const netCost = systemCost - totalSavings;
+  const roiYears = annualSavings > 0 ? (netCost / annualSavings) : null;
+  const offsetPct = systemCost > 0 ? (totalSavings / systemCost * 100) : 0;
+
+  document.getElementById('gcResults').innerHTML = `
+    <h4 style="margin:20px 0 8px; font-size:14px; color:var(--navy);">Result</h4>
+    <div class="result-strip">
+      <div class="result-tile"><div class="val">RM ${Math.round(systemCost).toLocaleString()}</div><div class="lbl">System capital cost</div></div>
+      <div class="result-tile"><div class="val">RM ${Math.round(totalSavings).toLocaleString()}</div><div class="lbl">Total savings (tax offset)</div></div>
+      <div class="result-tile"><div class="val">RM ${Math.round(netCost).toLocaleString()}</div><div class="lbl">Actual net cost</div></div>
+      <div class="result-tile"><div class="val">${roiYears!==null ? roiYears.toFixed(1)+' yrs' : '—'}</div><div class="lbl">Est. ROI period</div></div>
+      <div class="result-tile"><div class="val">-${offsetPct.toFixed(0)}%</div><div class="lbl">Total investment offset</div></div>
+    </div>
+
+    <h4 style="margin:20px 0 8px; font-size:13.5px; color:var(--navy);">① Capital Allowance (CA) Schedule</h4>
+    <table>
+      <thead><tr><th>Deduction Cycle</th><th>Rate</th><th>Amortized (RM)</th><th>Tax Saved (RM)</th></tr></thead>
+      <tbody>${caRows}</tbody>
+      <tfoot><tr><td colspan="3" style="font-weight:600;">Accumulated CA Tax Benefits</td><td style="font-weight:600; color:var(--navy);">RM ${accumulatedCA.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr></tfoot>
+    </table>
+
+    <h4 style="margin:20px 0 8px; font-size:13.5px; color:var(--navy);">② Green Investment Tax Allowance (GITA)</h4>
+    <div class="result-strip">
+      <div class="result-tile"><div class="val">${categoryLabel}</div><div class="lbl">Category weight</div></div>
+      <div class="result-tile"><div class="val">RM ${gitaSaving.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div><div class="lbl">Calculated GITA tax saving</div></div>
+    </div>
+    <p style="font-size:11px; color:var(--ink-soft); margin-top:10px;">Estimate only — Capital Allowance follows the standard Initial Allowance (20%) + Annual Allowance (14%/yr) schedule for plant &amp; machinery; GITA offset applies the selected category weight to the system cost. Confirm exact eligibility and rates with MIDA / LHDN before relying on this for a tax filing.</p>
+  `;
+}
+
+// Dedicated "Solar Tax Incentive Report" layout for the GITA Calculator's
+// PDF export — self-contained styling (own <style> block, no dependency on
+// the app's CSS variables) so it renders identically inside the in-app
+// preview modal and inside the separate print tab. Only this module uses
+// this layout; every other module keeps the shared letterhead report style.
+function buildGitaCalcReportHtml(){
+  const systemCost = parseFloat(document.getElementById('gcSystemCost').value) || 0;
+  const taxRate = (parseFloat(document.getElementById('gcTaxRate').value) || 0) / 100;
+  const gitaWeightPct = parseFloat(document.getElementById('gcCategory').value) || 0;
+  const gitaWeight = gitaWeightPct / 100;
+  const annualSavings = parseFloat(document.getElementById('gcAnnualSavings').value) || 0;
+  const categoryLabel = document.getElementById('gcCategory').selectedOptions[0].text;
+
+  const rates = gitaCaScheduleRates();
+  let caRows = '', accumulatedCA = 0;
+  rates.forEach((rate, i)=>{
+    const amortized = systemCost * (rate/100);
+    const taxSaved = amortized * taxRate;
+    accumulatedCA += taxSaved;
+    caRows += `<tr>
+      <td>Year ${String(i+1).padStart(2,'0')}</td>
+      <td><span class="gita-rpt-pill-rate">${rate}%</span></td>
+      <td class="num muted">${Math.round(amortized).toLocaleString()}</td>
+      <td class="num strong">RM ${taxSaved.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+    </tr>`;
+  });
+
+  const gitaSaving = systemCost * gitaWeight * taxRate;
+  const totalSavings = accumulatedCA + gitaSaving;
+  const netCost = systemCost - totalSavings;
+  const roiYears = annualSavings > 0 ? (netCost / annualSavings) : null;
+  const offsetPct = systemCost > 0 ? (totalSavings / systemCost * 100) : 0;
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric', month:'long', year:'numeric'});
+  const rm2 = n => 'RM ' + n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  const rm0 = n => 'RM ' + Math.round(n).toLocaleString();
+
+  return `
+  <style>
+    .gita-rpt{ font-family:'IBM Plex Sans', Arial, sans-serif; color:#171B21; background:#fff; padding:6px 2px; }
+    .gita-rpt-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:18px; }
+    .gita-rpt-brand{ display:flex; align-items:center; gap:12px; }
+    .gita-rpt-logo{ width:44px; height:44px; border-radius:11px; background:#12151A; color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; font-weight:700; letter-spacing:-1px; flex-shrink:0; }
+    .gita-rpt-brand-name{ font-family:'Space Grotesk', Arial, sans-serif; font-size:19px; font-weight:700; letter-spacing:.3px; }
+    .gita-rpt-brand-sub{ font-size:10px; letter-spacing:1.5px; color:#8A93A0; margin-top:2px; }
+    .gita-rpt-title-block{ text-align:right; }
+    .gita-rpt-eyebrow{ font-size:10px; letter-spacing:1.2px; color:#8A93A0; font-weight:600; margin-bottom:3px; }
+    .gita-rpt-title{ font-family:'Space Grotesk', Arial, sans-serif; font-size:19px; font-weight:700; }
+    .gita-rpt-date{ font-size:11px; color:#8A93A0; margin-top:3px; }
+    .gita-rpt-rule{ height:1px; background:#E7E9EC; margin:0 0 20px; }
+    .gita-rpt-rule.thin{ margin:22px 0; }
+    .gita-rpt-cost-row{ display:flex; justify-content:space-between; align-items:center; background:#F7F8F9; border:1px solid #ECEEF0; border-radius:10px; padding:18px 22px; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
+    .gita-rpt-label{ font-size:10px; letter-spacing:1px; color:#8A93A0; font-weight:600; margin-bottom:6px; }
+    .gita-rpt-big{ font-family:'Space Grotesk', Arial, sans-serif; font-size:25px; font-weight:700; color:#12151A; }
+    .gita-rpt-cat{ text-align:right; }
+    .gita-rpt-pill{ display:inline-block; background:#2F6FEA; color:#fff; font-size:11.5px; font-weight:700; padding:6px 14px; border-radius:20px; margin-top:2px; }
+    .gita-rpt-twobox{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:26px; }
+    .gita-rpt-box{ border-radius:10px; padding:16px 20px; border:1px solid; }
+    .gita-rpt-box.blue{ background:#EEF4FE; border-color:#D7E4FB; }
+    .gita-rpt-box.green{ background:#EAF8EF; border-color:#D3EEDC; }
+    .gita-rpt-box .gita-rpt-big{ font-size:21px; }
+    .gita-rpt-box.blue .gita-rpt-big{ color:#2F6FEA; }
+    .gita-rpt-box.green .gita-rpt-big{ color:#12151A; }
+    .gita-rpt-section{ display:flex; align-items:center; gap:10px; margin:26px 0 14px; }
+    .gita-rpt-num{ width:24px; height:24px; border-radius:6px; background:#12151A; color:#fff; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .gita-rpt-section h3{ font-family:'Space Grotesk', Arial, sans-serif; font-size:16px; font-weight:700; margin:0; flex:1; }
+    .gita-rpt-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+    .gita-rpt-table th{ text-align:left; font-size:9.5px; letter-spacing:.8px; color:#8A93A0; font-weight:600; padding:8px 6px; border-bottom:1px solid #E7E9EC; }
+    .gita-rpt-table td{ padding:11px 6px; border-bottom:1px solid #F1F2F4; vertical-align:middle; }
+    .gita-rpt-table td.num{ text-align:right; font-family:'IBM Plex Mono', monospace; }
+    .gita-rpt-table td.num.muted{ color:#8A93A0; }
+    .gita-rpt-table td.num.strong{ font-weight:700; color:#12151A; }
+    .gita-rpt-pill-rate{ display:inline-block; border:1px solid #E7E9EC; border-radius:20px; font-size:11px; padding:2px 10px; font-family:'IBM Plex Mono', monospace; }
+    .gita-rpt-total-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 6px 0; margin-top:2px; border-top:2px solid #12151A; font-size:11.5px; font-weight:700; letter-spacing:.5px; }
+    .gita-rpt-total-val{ font-family:'IBM Plex Mono', monospace; font-size:15px; color:#2F6FEA; }
+    .gita-rpt-dark{ background:#12151A; border-radius:14px; padding:22px 26px; display:flex; justify-content:space-between; align-items:center; gap:18px; flex-wrap:wrap; }
+    .gita-rpt-dark-label{ font-size:10px; letter-spacing:1px; color:#9AA3AF; font-weight:600; margin-bottom:6px; }
+    .gita-rpt-dark-val{ color:#fff; font-size:15px; font-weight:600; }
+    .gita-rpt-dark-inner{ background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:10px; padding:14px 22px; text-align:right; }
+    .gita-rpt-dark-val.big{ font-family:'Space Grotesk', Arial, sans-serif; font-size:22px; }
+    .gita-rpt-bottom{ display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-top:22px; flex-wrap:wrap; }
+    .gita-rpt-roi{ flex:1; min-width:260px; }
+    .gita-rpt-roi-label{ font-size:10px; letter-spacing:1px; color:#8A93A0; font-weight:600; margin-bottom:4px; }
+    .gita-rpt-roi-val{ font-family:'Space Grotesk', Arial, sans-serif; font-size:26px; font-weight:700; margin-bottom:12px; }
+    .gita-rpt-roi-val span{ font-family:'IBM Plex Sans', Arial, sans-serif; font-size:12px; font-weight:500; color:#8A93A0; margin-left:4px; }
+    .gita-rpt-roi-basis{ background:#F7F8F9; border:1px solid #ECEEF0; border-radius:8px; padding:10px 14px; font-size:11.5px; color:#4B5563; max-width:420px; }
+    .gita-rpt-roi-basis .gita-rpt-label{ margin-bottom:4px; }
+    .gita-rpt-offset{ text-align:right; }
+    .gita-rpt-offset-val{ font-family:'Space Grotesk', Arial, sans-serif; font-size:30px; font-weight:700; color:#12151A; }
+    .gita-rpt-offset-label{ font-size:10px; letter-spacing:1px; color:#2F6FEA; font-weight:700; margin-top:2px; }
+    .gita-rpt-footer{ display:flex; justify-content:space-between; font-size:10px; letter-spacing:.6px; color:#8A93A0; margin-top:8px; }
+    @media print{ .gita-rpt{ padding:0; } }
+  </style>
+  <div class="gita-rpt">
+    <div class="gita-rpt-head">
+      <div class="gita-rpt-brand">
+        <div class="gita-rpt-logo">∞</div>
+        <div>
+          <div class="gita-rpt-brand-name">ETERNALGY</div>
+          <div class="gita-rpt-brand-sub">SUSTAINABLE SOLAR SOLUTIONS</div>
+        </div>
+      </div>
+      <div class="gita-rpt-title-block">
+        <div class="gita-rpt-eyebrow">SOLAR TAX INCENTIVE REPORT</div>
+        <div class="gita-rpt-title">Investment ROI Analysis</div>
+        <div class="gita-rpt-date">${dateStr}</div>
+      </div>
+    </div>
+    <div class="gita-rpt-rule"></div>
+
+    <div class="gita-rpt-cost-row">
+      <div>
+        <div class="gita-rpt-label">SYSTEM CAPITAL COST (INVESTMENT)</div>
+        <div class="gita-rpt-big">${rm2(systemCost)}</div>
+      </div>
+      <div class="gita-rpt-cat">
+        <div class="gita-rpt-label">INCENTIVE CATEGORY</div>
+        <div class="gita-rpt-pill">${gitaWeightPct}% GITA OFFSET</div>
+      </div>
+    </div>
+
+    <div class="gita-rpt-twobox">
+      <div class="gita-rpt-box blue">
+        <div class="gita-rpt-label">TOTAL SAVINGS (TAX OFFSET)</div>
+        <div class="gita-rpt-big">${rm2(totalSavings)}</div>
+      </div>
+      <div class="gita-rpt-box green">
+        <div class="gita-rpt-label">ACTUAL NET COST</div>
+        <div class="gita-rpt-big">${rm2(netCost)}</div>
+      </div>
+    </div>
+
+    <div class="gita-rpt-section"><span class="gita-rpt-num">01</span><h3>Capital Allowance (CA) Schedule</h3></div>
+    <table class="gita-rpt-table">
+      <thead><tr><th>Deduction Cycle</th><th>Rate</th><th style="text-align:right;">Amortized (RM)</th><th style="text-align:right;">Tax Saved (RM)</th></tr></thead>
+      <tbody>${caRows}</tbody>
+    </table>
+    <div class="gita-rpt-total-row">
+      <span>ACCUMULATED CA TAX BENEFITS</span>
+      <span class="gita-rpt-total-val">${rm2(accumulatedCA)}</span>
+    </div>
+
+    <div class="gita-rpt-section"><span class="gita-rpt-num">02</span><h3>Green Investment Tax Allowance (GITA)</h3></div>
+    <div class="gita-rpt-dark">
+      <div>
+        <div class="gita-rpt-dark-label">CATEGORY WEIGHT</div>
+        <div class="gita-rpt-dark-val">⚡ ${categoryLabel}</div>
+      </div>
+      <div class="gita-rpt-dark-inner">
+        <div class="gita-rpt-dark-label">CALCULATED GITA TAX SAVING (RM)</div>
+        <div class="gita-rpt-dark-val big">${rm2(gitaSaving)}</div>
+      </div>
+    </div>
+
+    <div class="gita-rpt-rule thin"></div>
+
+    <div class="gita-rpt-bottom">
+      <div class="gita-rpt-roi">
+        <div class="gita-rpt-roi-label">↗ EST. ROI PERIOD</div>
+        <div class="gita-rpt-roi-val">${roiYears!==null ? roiYears.toFixed(1) : '—'}<span>YEARS</span></div>
+        <div class="gita-rpt-roi-basis">
+          <div class="gita-rpt-label">ⓘ ROI CALCULATION BASIS</div>
+          <div>Based on net cost of ${rm0(netCost)} and ann. savings of ${rm0(annualSavings)}.</div>
+        </div>
+      </div>
+      <div class="gita-rpt-offset">
+        <div class="gita-rpt-offset-val">-${offsetPct.toFixed(0)}%</div>
+        <div class="gita-rpt-offset-label">TOTAL INVESTMENT OFFSET</div>
+      </div>
+    </div>
+
+    <div class="gita-rpt-rule thin"></div>
+    <div class="gita-rpt-footer">
+      <span>ETERNALGY COMMERCIAL HUB</span>
+      <span>CONFIDENTIAL PROPOSAL • ${now.getFullYear()}</span>
+    </div>
+  </div>`;
+}
+
+/* ---------------------------------------------------------
+   PAGE — MODULE 07: GITA APPLICATION DOC CHECKLIST
+--------------------------------------------------------- */
+function gitaDashboardStats(){
+  const customers = state.gitaCustomers;
+  const total = customers.length;
+  const countByStatus = status => customers.filter(g=>g.status===status).length;
+  const done = countByStatus('Done');
+  const preparing = countByStatus('Preparing');
+  const sentToCustomer = countByStatus('Sent to customer');
+  const keepInView = countByStatus('Keep In View');
+  const completionRate = total ? (done/total*100) : 0;
+
+  return `
+    <div class="kpi-grid">
+      <div class="kpi-tile"><p class="kpi-label">Total Customers</p><div class="kpi-value">${total}</div></div>
+      <div class="kpi-tile"><p class="kpi-label">Preparing</p><div class="kpi-value" style="color:#C97D1A;">${preparing}</div></div>
+      <div class="kpi-tile"><p class="kpi-label">Sent to Customer</p><div class="kpi-value" style="color:#1C6E9C;">${sentToCustomer}</div></div>
+      <div class="kpi-tile"><p class="kpi-label">Keep In View</p><div class="kpi-value" style="color:#B23434;">${keepInView}</div></div>
+      <div class="kpi-tile"><p class="kpi-label">Done</p><div class="kpi-value" style="color:#1E7A4C;">${done}</div><p class="kpi-target">${completionRate.toFixed(0)}% completion rate</p></div>
+    </div>`;
+}
+
 function renderGita(){
   const q = gitaSearchQuery.trim().toLowerCase();
   const filtered = !q ? state.gitaCustomers : state.gitaCustomers.filter(g =>
@@ -2715,12 +3546,13 @@ function renderGita(){
   return `
     <div class="page-head">
       <div>
-        <p class="eyebrow">Module 06</p><h2>GITA Application Doc Checklist</h2>
+        <p class="eyebrow">Module 07</p><h2>GITA Application Doc Checklist</h2>
         <p>Track which customers are applying for GITA, current document status, and who's handling each case.</p>
       </div>
       <button class="btn btn-ghost" type="button" data-pdf-export-btn>⬇ Export as PDF</button>
     </div>
-    <div class="panel">
+    ${gitaDashboardStats()}
+    <div class="panel" style="margin-top:16px;">
       <div class="toolbar-row">
         <div class="client-search-row">
           <input type="search" id="gitaSearchInput" placeholder="🔍 Search by site / customer name…" value="${escapeAttr(gitaSearchQuery)}">
@@ -2736,8 +3568,29 @@ function renderGita(){
 }
 
 /* ---------------------------------------------------------
-   PAGE — MODULE 07: SUMMARY INSTALLATION REPORT
+   PAGE — MODULE 08: SUMMARY INSTALLATION REPORT
 --------------------------------------------------------- */
+function installReportsDashboardStats(){
+  const reports = state.installReports;
+  const total = reports.length;
+  const now = new Date();
+  const thisMonth = reports.filter(r=>{
+    if(!r.dateInstallation) return false;
+    const d = new Date(r.dateInstallation);
+    return d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth();
+  }).length;
+  const totalPhotos = reports.reduce((sum,r)=>sum+((r.photos||[]).length),0);
+  const missingPhotos = reports.filter(r=>!(r.photos && r.photos.length)).length;
+
+  return `
+    <div class="kpi-grid">
+      <div class="kpi-tile"><p class="kpi-label">Sites Completed</p><div class="kpi-value">${total}</div><p class="kpi-target">Total installations documented</p></div>
+      <div class="kpi-tile"><p class="kpi-label">Completed This Month</p><div class="kpi-value" style="color:#1E7A4C;">${thisMonth}</div></div>
+      <div class="kpi-tile"><p class="kpi-label">Site Photos Documented</p><div class="kpi-value">${totalPhotos}</div></div>
+      <div class="kpi-tile"><p class="kpi-label">Missing Photos</p><div class="kpi-value" style="color:${missingPhotos>0 ? '#B23434' : '#1E7A4C'};">${missingPhotos}</div><p class="kpi-target">Report(s) with no site photo yet</p></div>
+    </div>`;
+}
+
 function renderInstallReports(){
   const q = reportSearchQuery.trim().toLowerCase();
   const filtered = !q ? state.installReports : state.installReports.filter(r =>
@@ -2754,6 +3607,7 @@ function renderInstallReports(){
         </div>
         <div style="display:flex; gap:8px; flex-shrink:0;">
           <button type="button" class="btn btn-ghost" data-edit-report="${r.id}">✏️ Edit</button>
+          <button type="button" class="btn btn-ghost" data-pdf-export-report-btn="${r.id}">⬇ Export PDF</button>
           <button type="button" class="btn btn-amber" data-see-report="${r.id}">📄 See Report</button>
         </div>
       </div>
@@ -2765,12 +3619,13 @@ function renderInstallReports(){
   return `
     <div class="page-head">
       <div>
-        <p class="eyebrow">Module 07</p><h2>Summary Installation Report</h2>
+        <p class="eyebrow">Module 08</p><h2>Summary Installation Report</h2>
         <p>Record what happened at each site — team members, issues, accidents, and photos for future reference with clients.</p>
       </div>
       <button class="btn btn-ghost" type="button" data-pdf-export-btn>⬇ Export as PDF</button>
     </div>
-    <div class="panel">
+    ${installReportsDashboardStats()}
+    <div class="panel" style="margin-top:16px;">
       <div class="toolbar-row">
         <div class="client-search-row">
           <input type="search" id="reportSearchInput" placeholder="🔍 Search by site name…" value="${escapeAttr(reportSearchQuery)}">
@@ -2791,13 +3646,54 @@ function renderInstallReports(){
    the browser's print dialog scoped to just this document (#printArea) —
    choosing "Save as PDF" there gives a real PDF, with no external
    library or internet connection needed. */
-function renderReportView(){
-  const r = state.installReports.find(x=>x.id===reportViewId);
-  if(!r) return '';
+/* Builds the full letterhead + report-doc HTML for one installation report.
+   Shared by the "See Report" modal preview and the per-site "Export PDF"
+   shortcut button on the list, so both always produce identical output —
+   including any uploaded site photos, which are embedded inline so the
+   report stays a single self-contained file when saved/shared as PDF. */
+function buildInstallReportDocHtml(r){
   const list = txt => (txt||'').split('\n').map(s=>s.trim()).filter(Boolean);
   const wiring = list(r.wiringTeam);
   const installer = list(r.installerTeam);
+  return `
+    <div class="report-doc">
+      ${letterheadHtml()}
+      <div class="letterhead-rule"></div>
+      ${docControlBlockHtml(docControlNo('INST', r.id))}
+      <h1>${escapeHtml(r.siteName || '(Untitled site)')}</h1>
+      <p class="report-doc-sub">Installation Summary Report</p>
+      <div class="report-doc-grid">
+        <div class="report-doc-field"><label>Address</label><div>${escapeHtml(r.address||'—')}</div></div>
+        <div class="report-doc-field"><label>Agent</label><div>${escapeHtml(r.agent||'—')}</div></div>
+        <div class="report-doc-field"><label>Date of Installation</label><div>${escapeHtml(r.dateInstallation||'—')}</div></div>
+        <div class="report-doc-field"><label>Supervisor</label><div>${escapeHtml(r.supervisor||'—')}</div></div>
+      </div>
+      <div class="report-doc-section">
+        <h3>Wiring Team</h3>
+        <p>${wiring.length ? escapeHtml(wiring.join(', ')) : '—'}</p>
+      </div>
+      <div class="report-doc-section">
+        <h3>Installer Team</h3>
+        <p>${installer.length ? escapeHtml(installer.join(', ')) : '—'}</p>
+      </div>
+      <div class="report-doc-section">
+        <h3>Summary of Task at Site</h3>
+        <p>${r.summary ? escapeHtml(r.summary) : '—'}</p>
+      </div>
+      ${r.photos && r.photos.length ? `
+      <div class="report-doc-section">
+        <h3>Site Photos</h3>
+        <div class="report-doc-photos">
+          ${r.photos.map(p=>`<img src="${p.dataUrl}" alt="${escapeAttr(p.name||'site photo')}">`).join('')}
+        </div>
+      </div>` : ''}
+      ${signOffBlockHtml()}
+    </div>`;
+}
 
+function renderReportView(){
+  const r = state.installReports.find(x=>x.id===reportViewId);
+  if(!r) return '';
   return `
   <div class="modal-overlay" id="reportViewOverlay">
     <div class="modal-box" style="max-width:820px;">
@@ -2806,35 +3702,7 @@ function renderReportView(){
         <button type="button" class="modal-close" id="reportViewCloseBtn">✕</button>
       </div>
       <div id="printArea">
-        <div class="report-doc">
-          <h1>${escapeHtml(r.siteName || '(Untitled site)')}</h1>
-          <p class="report-doc-sub">Installation Summary Report</p>
-          <div class="report-doc-grid">
-            <div class="report-doc-field"><label>Address</label><div>${escapeHtml(r.address||'—')}</div></div>
-            <div class="report-doc-field"><label>Agent</label><div>${escapeHtml(r.agent||'—')}</div></div>
-            <div class="report-doc-field"><label>Date of Installation</label><div>${escapeHtml(r.dateInstallation||'—')}</div></div>
-            <div class="report-doc-field"><label>Supervisor</label><div>${escapeHtml(r.supervisor||'—')}</div></div>
-          </div>
-          <div class="report-doc-section">
-            <h3>Wiring Team</h3>
-            <p>${wiring.length ? escapeHtml(wiring.join(', ')) : '—'}</p>
-          </div>
-          <div class="report-doc-section">
-            <h3>Installer Team</h3>
-            <p>${installer.length ? escapeHtml(installer.join(', ')) : '—'}</p>
-          </div>
-          <div class="report-doc-section">
-            <h3>Summary of Task at Site</h3>
-            <p>${r.summary ? escapeHtml(r.summary) : '—'}</p>
-          </div>
-          ${r.photos && r.photos.length ? `
-          <div class="report-doc-section">
-            <h3>Site Photos</h3>
-            <div class="report-doc-photos">
-              ${r.photos.map(p=>`<img src="${p.dataUrl}" alt="${escapeAttr(p.name||'site photo')}">`).join('')}
-            </div>
-          </div>` : ''}
-        </div>
+        ${buildInstallReportDocHtml(r)}
       </div>
       <div class="modal-actions no-print">
         <button type="button" class="btn btn-ghost" id="reportViewEditBtn">✏️ Edit this report</button>
@@ -2904,7 +3772,7 @@ function renderReportModal(){
 }
 
 /* ---------------------------------------------------------
-   PAGE — MODULE 08: KPI C&I DEPARTMENT
+   PAGE — MODULE 09: KPI C&I DEPARTMENT
 --------------------------------------------------------- */
 function calcKPI(){
   const closedWon = state.leads.filter(l=>l.stage==='Closed Won');
@@ -2943,8 +3811,8 @@ function salesComparisonChartSVG(actual, target){
   const rm = n => 'RM ' + Math.round(n||0).toLocaleString();
 
   const bars = [
-    { label:'Target', value: target, color:'#B7CFC7' },
-    { label:'Actual',  value: actual, color: actual>=target ? '#2E9E6D' : '#F0A93E' },
+    { label:'Target', value: target, color:'var(--ink-soft)' },
+    { label:'Actual',  value: actual, color: actual>=target ? 'var(--green)' : 'var(--amber)' },
   ];
 
   const barsSVG = bars.map((b,i)=>{
@@ -2952,9 +3820,9 @@ function salesComparisonChartSVG(actual, target){
     const x = groupStartX + i*(barW+gap);
     const y = padTop + (chartH - barH);
     return `
-      <text x="${x+barW/2}" y="${y-10}" text-anchor="middle" font-size="13" font-weight="700" fill="#0F3D38">${rm(b.value)}</text>
-      <rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="6" fill="${b.color}"></rect>
-      <text x="${x+barW/2}" y="${h-padBottom+22}" text-anchor="middle" font-size="12.5" fill="#5E7069">${b.label}</text>
+      <text x="${x+barW/2}" y="${y-10}" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--ink)">${rm(b.value)}</text>
+      <rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="6" style="fill:${b.color}"></rect>
+      <text x="${x+barW/2}" y="${h-padBottom+22}" text-anchor="middle" font-size="12.5" style="fill:var(--ink-soft)">${b.label}</text>
     `;
   }).join('');
 
@@ -2962,13 +3830,13 @@ function salesComparisonChartSVG(actual, target){
   const gridLines = [0.5, 1].map(f=>{
     const y = padTop + chartH - (chartH*f);
     const val = maxVal*f;
-    return `<line x1="${padLeft}" y1="${y}" x2="${w-padRight}" y2="${y}" stroke="#DCE6DE" stroke-width="1"/>
-      <text x="${padLeft-10}" y="${y+4}" text-anchor="end" font-size="10.5" fill="#84988D">${rm(val)}</text>`;
+    return `<line x1="${padLeft}" y1="${y}" x2="${w-padRight}" y2="${y}" style="stroke:var(--line)" stroke-width="1"/>
+      <text x="${padLeft-10}" y="${y+4}" text-anchor="end" font-size="10.5" style="fill:var(--ink-soft)">${rm(val)}</text>`;
   }).join('');
 
   return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" xmlns="http://www.w3.org/2000/svg">
     ${gridLines}
-    <line x1="${padLeft}" y1="${padTop+chartH}" x2="${w-padRight}" y2="${padTop+chartH}" stroke="#C6D3C9" stroke-width="1.5"/>
+    <line x1="${padLeft}" y1="${padTop+chartH}" x2="${w-padRight}" y2="${padTop+chartH}" style="stroke:var(--ink-soft)" stroke-width="1.5"/>
     ${barsSVG}
   </svg>`;
 }
@@ -2980,7 +3848,7 @@ function renderKPI(){
   return `
     <div class="page-head">
       <div>
-        <p class="eyebrow">Module 08</p><h2>KPI — C&amp;I Department</h2>
+        <p class="eyebrow">Module 09</p><h2>KPI — C&amp;I Department</h2>
         <p>Sales targets and pipeline efficiency, calculated live from Module 01 Sales Pipeline.</p>
       </div>
       <button class="btn btn-ghost" type="button" data-pdf-export-btn>⬇ Export as PDF</button>
@@ -3053,6 +3921,331 @@ function renderKPI(){
     </div>
   `;
 }
+
+/* ---------------------------------------------------------
+   MODULE 09 — GUIDELINES
+   A living knowledge base for the C&I department: licensing steps,
+   GITA form prep, SOPs, onboarding notes — anything a new staff should
+   be able to look up. Anyone can add/edit an entry any time; an optional
+   PDF or image can be attached to each one for the original document.
+--------------------------------------------------------- */
+function renderGuidelines(){
+  const q = guidelineSearchQuery.trim().toLowerCase();
+  const categories = ['All', ...new Set(state.guidelines.map(g=>g.category||'General')).values()].sort((a,b)=> a==='All'?-1 : b==='All'?1 : a.localeCompare(b));
+
+  let items = state.guidelines.slice().sort((a,b)=> (a.category||'').localeCompare(b.category||'') || a.title.localeCompare(b.title));
+  if(guidelineCategoryFilter !== 'All') items = items.filter(g=>(g.category||'General')===guidelineCategoryFilter);
+  if(q) items = items.filter(g=> g.title.toLowerCase().includes(q) || (g.content||'').toLowerCase().includes(q) || (g.category||'').toLowerCase().includes(q));
+
+  const cardsHtml = items.map(g=>{
+    const expanded = expandedGuidelineIds.has(g.id);
+    const updated = g.updatedAt ? new Date(g.updatedAt).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+    const isImage = g.attachment && /^image\//.test(g.attachment.type||'');
+    const isPdf = g.attachment && g.attachment.type === 'application/pdf';
+    return `
+    <div class="guide-card">
+      <div class="guide-card-head" data-toggle-guideline="${g.id}">
+        <div class="guide-card-titles">
+          <h3>${escapeHtml(g.title||'Untitled')}</h3>
+          <div class="guide-card-meta">
+            <span class="guide-cat-tag">${escapeHtml(g.category||'General')}</span>
+            <span>Updated ${updated}</span>
+            ${g.attachment ? `<span>📎 ${escapeHtml(g.attachment.name||'attachment')}</span>` : ''}
+          </div>
+        </div>
+        <div class="guide-card-actions">
+          <button type="button" class="btn btn-ghost" data-edit-guideline="${g.id}">✏️ Edit</button>
+          <button type="button" class="btn btn-ghost" data-delete-guideline="${g.id}">🗑</button>
+          <button type="button" class="guide-toggle">${expanded ? '▲' : '▼'}</button>
+        </div>
+      </div>
+      ${expanded ? `
+      <div class="guide-card-body">
+        ${g.content ? escapeHtml(g.content) : '<span style="color:var(--ink-soft);">No written notes — see attachment below.</span>'}
+        ${g.attachment ? `
+        <div class="guide-card-attachment">
+          ${isImage ? `<img src="${g.attachment.dataUrl}" alt="${escapeAttr(g.attachment.name||'attachment')}" style="max-width:100%; max-height:420px; border-radius:8px; border:1px solid var(--line); display:block;">` : ''}
+          ${isPdf ? `<embed src="${g.attachment.dataUrl}" type="application/pdf" style="width:100%; height:480px; border:1px solid var(--line); border-radius:8px;">` : ''}
+          <a href="${g.attachment.dataUrl}" download="${escapeAttr(g.attachment.name||'attachment')}" class="btn btn-ghost" style="margin-top:8px; display:inline-flex;">⬇ Download ${escapeHtml(g.attachment.name||'attachment')}</a>
+        </div>` : ''}
+      </div>` : ''}
+    </div>`;
+  }).join('') || `<div class="guide-empty">${q || guidelineCategoryFilter!=='All' ? 'No guidelines match your search.' : 'No guidelines yet — click "+ Add Guideline" to write the first one.'}</div>`;
+
+  return `
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">Module 10</p><h2>Guidelines</h2>
+        <p>A living how-to library for the C&amp;I department — licensing steps, GITA prep, SOPs and anything new staff should know. Update it any time.</p>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-ghost" type="button" data-pdf-export-btn>⬇ Export as PDF</button>
+        <button class="btn btn-amber" type="button" id="addGuidelineBtn">+ Add Guideline</button>
+      </div>
+    </div>
+
+    <div class="client-search-row" style="margin-top:14px;">
+      <input type="search" id="guidelineSearchInput" placeholder="🔍 Search guidelines…" value="${escapeAttr(guidelineSearchQuery)}">
+      <button class="btn btn-ghost" id="guidelineSearchBtn">Search</button>
+    </div>
+
+    <div class="guide-filters">
+      ${categories.map(c=>`<button type="button" class="guide-chip ${c===guidelineCategoryFilter?'active':''}" data-guideline-filter="${escapeAttr(c)}">${escapeHtml(c)}</button>`).join('')}
+    </div>
+
+    ${cardsHtml}
+    ${guidelineModalOpen ? renderGuidelineModal() : ''}
+  `;
+}
+
+function renderGuidelineModal(){
+  const g = editingGuidelineId ? state.guidelines.find(x=>x.id===editingGuidelineId) : null;
+  const existingCategories = [...new Set(state.guidelines.map(x=>x.category||'General'))];
+
+  return `
+  <div class="modal-overlay" id="guidelineModalOverlay">
+    <div class="modal-box" style="max-width:640px;">
+      <div class="modal-head">
+        <h2>${g ? 'Edit Guideline' : 'Add Guideline'}</h2>
+        <button type="button" class="modal-close" id="guidelineCancelBtn">✕</button>
+      </div>
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="guideTitle" placeholder="e.g. How to Apply for a Solar PV Contractor License" value="${escapeAttr(g?.title||'')}">
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <input type="text" id="guideCategory" list="guideCategoryList" placeholder="e.g. Licensing, GITA / Tax Incentive, Onboarding…" value="${escapeAttr(g?.category||'')}">
+        <datalist id="guideCategoryList">${existingCategories.map(c=>`<option value="${escapeAttr(c)}">`).join('')}</datalist>
+      </div>
+      <div class="field">
+        <label>Notes / Steps</label>
+        <textarea id="guideContent" rows="8" placeholder="Write the guideline here — steps, requirements, tips for new staff…">${escapeHtml(g?.content||'')}</textarea>
+      </div>
+      <div class="roof-photos" style="margin-top:4px;">
+        <div class="roof-photos-head">
+          <label class="title">Attachment (PDF or image, optional)</label>
+          <label class="btn-upload">📤 Upload file
+            <input type="file" accept="application/pdf,image/*" id="guideAttachmentInput" style="display:none;">
+          </label>
+        </div>
+        <div id="guideAttachmentPreview">
+          ${g?.attachment ? `
+          <div class="proposal-file-row">
+            <a class="proposal-file-link" href="${g.attachment.dataUrl}" target="_blank" rel="noopener">📎 ${escapeHtml(g.attachment.name||'attachment')}</a>
+            <button type="button" class="proposal-file-remove" id="guideRemoveAttachmentBtn">✕ Remove</button>
+          </div>` : `<p class="roof-photo-empty">No file attached yet.</p>`}
+        </div>
+      </div>
+      <p id="guideFormError" style="display:none; color:var(--red); font-size:12.5px; margin:12px 0 0;">Please fill in the title before saving.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="guidelineCancelBtn2">Cancel</button>
+        <button type="button" class="btn btn-amber" id="guidelineSaveBtn">Save Guideline</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------------------------------------------------------
+   PAGE — MODULE 11: WEEKLY JOB REPORT
+   Every C&I staff member logs what they worked on each week —
+   one place the HOD can pull up to show top management what the
+   department has been doing. Stored in the shared portal state
+   (same storage as everything else), grouped by ISO week.
+--------------------------------------------------------- */
+const WEEKLY_STATUS_OPTIONS = ['Not Started','In Progress','Completed','Issue'];
+function weeklyStatusColors(status){
+  switch(status){
+    case 'Completed': return { bg:'#DCF3E4', fg:'#1E7A4C' };
+    case 'In Progress': return { bg:'#FCEBC7', fg:'#8A5A00' };
+    case 'Issue': return { bg:'#F7D9D9', fg:'#B23434' };
+    default: return { bg:'#E4EAE2', fg:'#5E7069' }; // Not Started
+  }
+}
+function wrGetISOWeek(date){
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return { year: d.getUTCFullYear(), week: weekNo };
+}
+function wrGetWeekMonday(year, week){
+  const simple = new Date(Date.UTC(year, 0, 1 + (week - 1) * 7));
+  const dow = simple.getUTCDay();
+  const monday = new Date(simple);
+  if (dow <= 4) monday.setUTCDate(simple.getUTCDate() - dow + 1);
+  else monday.setUTCDate(simple.getUTCDate() + 8 - dow);
+  return monday;
+}
+const WR_MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function wrFmtShort(d){ return d.getUTCDate() + ' ' + WR_MONTH_NAMES[d.getUTCMonth()]; }
+function wrTodayISO(){
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function wrFmtDateDisplay(iso){
+  if (!iso) return '—';
+  const parts = iso.split('-');
+  if (parts.length !== 3) return iso;
+  const y = parseInt(parts[0],10), m = parseInt(parts[1],10)-1, day = parseInt(parts[2],10);
+  return String(day).padStart(2,'0') + ' ' + WR_MONTH_NAMES[m] + ' ' + y;
+}
+function wrWeekKey(s){ return s.year + '-W' + String(s.week).padStart(2,'0'); }
+// Which week is currently being viewed in Module 11 — module-local, not part of the saved state.
+let wrView = wrGetISOWeek(new Date());
+let wrLastName = '';
+
+function renderWeeklyReports(){
+  const monday = wrGetWeekMonday(wrView.year, wrView.week);
+  const sunday = new Date(monday); sunday.setUTCDate(monday.getUTCDate() + 6);
+  const rangeText = wrFmtShort(monday) + ' – ' + wrFmtShort(sunday) + ' ' + sunday.getUTCFullYear();
+  const isCurrentWeek = wrWeekKey(wrView) === wrWeekKey(wrGetISOWeek(new Date()));
+  const entries = state.weeklyReports
+    .filter(e => e.year===wrView.year && e.week===wrView.week)
+    .sort((a,b)=> (a.date||'').localeCompare(b.date||'') || a.id-b.id);
+
+  const weeksSeen = {};
+  state.weeklyReports.forEach(e=>{ weeksSeen[e.year+'-W'+String(e.week).padStart(2,'0')] = { year:e.year, week:e.week }; });
+  const weekOptions = Object.values(weeksSeen).sort((a,b)=> (b.year-a.year) || (b.week-a.week));
+
+  const total = entries.length;
+  const completed = entries.filter(e=>e.status==='Completed').length;
+  const inProgress = entries.filter(e=>e.status==='In Progress').length;
+  const issues = entries.filter(e=>e.status==='Issue').length;
+
+  return `
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">Module 11</p><h2>Weekly Job Report</h2>
+        <p>Everyone in C&amp;I logs what they worked on each week here — one place to show top management what the department has been doing.</p>
+      </div>
+      <button class="btn btn-ghost" type="button" data-pdf-export-btn>⬇ Export as PDF</button>
+    </div>
+    <div class="panel">
+      <div class="toolbar-row">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button class="btn btn-ghost" type="button" id="wrPrevWeek" title="Previous week">‹</button>
+          <div style="text-align:center; min-width:170px;">
+            <div style="font-weight:600; color:var(--navy); font-size:14px;">
+              Week ${wrView.week}, ${wrView.year}
+              ${!isCurrentWeek ? `<span style="font-size:10px; font-weight:700; color:#B23434; background:#F7D9D9; padding:1px 6px; border-radius:4px; margin-left:6px; vertical-align:middle;">ARCHIVED</span>` : ''}
+            </div>
+            <div style="font-size:11.5px; color:var(--ink-soft); margin-top:1px;">${rangeText}</div>
+          </div>
+          <button class="btn btn-ghost" type="button" id="wrNextWeek" title="Next week">›</button>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <select id="wrWeekSelect">
+            <option value="">Previous Reports…</option>
+            ${weekOptions.map(w=>`<option value="${w.year}-${w.week}" ${w.year===wrView.year && w.week===wrView.week ? 'selected':''}>Week ${w.week}, ${w.year}</option>`).join('')}
+          </select>
+          <button class="btn btn-ghost" type="button" id="wrThisWeek">This week</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-grid" style="margin-top:16px;">
+      <div class="kpi-tile"><p class="kpi-label">Entries This Week</p><div class="kpi-value">${total}</div></div>
+      <div class="kpi-tile"><p class="kpi-label">Completed</p><div class="kpi-value" style="color:#1E7A4C;">${completed}</div></div>
+      <div class="kpi-tile"><p class="kpi-label">In Progress</p><div class="kpi-value" style="color:#8A5A00;">${inProgress}</div></div>
+      <div class="kpi-tile"><p class="kpi-label">Issues</p><div class="kpi-value" style="color:${issues>0?'#B23434':'#1E7A4C'};">${issues}</div></div>
+    </div>
+
+    <div class="panel" style="margin-top:16px; padding:0; overflow-x:auto;">
+      <table style="margin:0;">
+        <thead><tr><th style="width:120px;">Name</th><th style="width:100px;">Date</th><th>Job Scope</th><th style="width:120px;">Status</th><th>Notes / Issues</th><th style="width:40px;"></th></tr></thead>
+        <tbody>
+          ${entries.length ? entries.map(e=>{
+            const col = weeklyStatusColors(e.status);
+            return `<tr>
+              <td style="font-weight:600; color:var(--navy);">${escapeHtml(e.pic||'—')}</td>
+              <td style="white-space:nowrap; color:var(--ink-soft);">${escapeHtml(wrFmtDateDisplay(e.date))}</td>
+              <td style="white-space:pre-wrap;">${escapeHtml(e.scope||'')}</td>
+              <td><span style="display:inline-block; font-size:11.5px; font-weight:600; padding:3px 10px; border-radius:20px; background:${col.bg}; color:${col.fg};">${escapeHtml(e.status||'Not Started')}</span></td>
+              <td style="white-space:pre-wrap; color:var(--ink-soft);">${escapeHtml(e.notes||'—')}</td>
+              <td style="text-align:center;"><button type="button" data-del-weekly="${e.id}" title="Delete" style="background:none; border:none; cursor:pointer; color:var(--ink-soft); font-size:16px; border-radius:6px; width:26px; height:26px;">✕</button></td>
+            </tr>`;
+          }).join('') : `<tr><td colspan="6" style="text-align:center; color:var(--ink-soft); padding:28px;">No entries yet for this week. Add one below.</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" style="margin-top:16px;">
+      <h3 style="margin:0 0 12px; font-size:13px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft);">Add New Entry</h3>
+      <div class="row">
+        <div class="field"><label>Name</label><input type="text" id="wrInPic" placeholder="e.g. Aiman" value="${escapeAttr(wrLastName)}"></div>
+        <div class="field"><label>Date</label><input type="date" id="wrInDate" value="${wrTodayISO()}"></div>
+        <div class="field"><label>Status</label>
+          <select id="wrInStatus">
+            ${WEEKLY_STATUS_OPTIONS.map(s=>`<option value="${s}" ${s==='In Progress'?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field" style="grid-column:1 / -1;"><label>Job scope for this week</label><textarea id="wrInScope" rows="2" placeholder="What did you work on…"></textarea></div>
+      </div>
+      <div class="row">
+        <div class="field" style="grid-column:1 / -1;"><label>Notes / issues (if any)</label><textarea id="wrInNotes" rows="2" placeholder="Optional"></textarea></div>
+      </div>
+      <button class="btn btn-primary" id="wrAddBtn">+ Add Entry</button>
+      <p id="wrStatusLine" style="font-size:12px; color:var(--ink-soft); margin-top:8px; min-height:16px;">&nbsp;</p>
+    </div>
+  `;
+}
+
+function wrAddEntry(){
+  const picEl = document.getElementById('wrInPic');
+  const scopeEl = document.getElementById('wrInScope');
+  const statusLine = document.getElementById('wrStatusLine');
+  const pic = picEl.value.trim();
+  const scope = scopeEl.value.trim();
+  if(!pic){ statusLine.textContent = 'Please fill in the name first.'; statusLine.style.color = '#B23434'; picEl.focus(); return; }
+  if(!scope){ statusLine.textContent = 'Please fill in the job scope first.'; statusLine.style.color = '#B23434'; scopeEl.focus(); return; }
+
+  state.weeklyReports.push({
+    id: uid(),
+    pic: pic,
+    date: document.getElementById('wrInDate').value || wrTodayISO(),
+    scope: scope,
+    status: document.getElementById('wrInStatus').value,
+    notes: document.getElementById('wrInNotes').value.trim(),
+    year: wrView.year,
+    week: wrView.week,
+    ts: new Date().toISOString()
+  });
+  wrLastName = pic;
+  commit();
+}
+function buildWeeklyReportDocHtml(){
+  const monday = wrGetWeekMonday(wrView.year, wrView.week);
+  const sunday = new Date(monday); sunday.setUTCDate(monday.getUTCDate() + 6);
+  const rangeText = wrFmtShort(monday) + ' – ' + wrFmtShort(sunday) + ' ' + sunday.getUTCFullYear();
+  const entries = state.weeklyReports
+    .filter(e => e.year===wrView.year && e.week===wrView.week)
+    .sort((a,b)=> (a.date||'').localeCompare(b.date||''));
+  const rows = entries.length ? entries.map(e=>{
+    const col = weeklyStatusColors(e.status);
+    return `<tr>
+      <td>${escapeHtml(e.pic||'—')}</td>
+      <td style="white-space:nowrap;">${escapeHtml(wrFmtDateDisplay(e.date))}</td>
+      <td>${escapeHtml(e.scope||'')}</td>
+      <td><span style="display:inline-block; font-size:11px; font-weight:600; padding:2px 9px; border-radius:20px; background:${col.bg}; color:${col.fg};">${escapeHtml(e.status||'Not Started')}</span></td>
+      <td>${escapeHtml(e.notes||'—')}</td>
+    </tr>`;
+  }).join('') : `<tr><td colspan="5" style="text-align:center; color:var(--ink-soft);">No entries recorded for this week.</td></tr>`;
+  return `
+    <div class="report-doc-grid">
+      <div class="report-doc-field"><label>Week</label><div>Week ${wrView.week}, ${wrView.year}</div></div>
+      <div class="report-doc-field"><label>Date range</label><div>${rangeText}</div></div>
+      <div class="report-doc-field"><label>Entries</label><div>${entries.length}</div></div>
+    </div>
+    <table>
+      <thead><tr><th style="width:110px;">Name</th><th style="width:90px;">Date</th><th>Job Scope</th><th style="width:100px;">Status</th><th>Notes / Issues</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
 
 /* ---------------------------------------------------------
    EVENT HANDLERS
@@ -3446,7 +4639,44 @@ function attachPageHandlers(){
     }
   }
 
-  if(currentPage === 'design') document.getElementById('dsCalcBtn').addEventListener('click', calcDesign);
+  if(currentPage === 'design'){
+    document.getElementById('dsCalcBtn').addEventListener('click', calcDesign);
+    document.getElementById('dsSizeKnownCalcBtn').addEventListener('click', calcDesignFromSize);
+  }
+  if(currentPage === 'gitaCalc') document.getElementById('gcCalcBtn').addEventListener('click', calcGitaCalculator);
+  if(currentPage === 'weeklyReports'){
+    document.getElementById('wrPrevWeek').addEventListener('click', ()=>{
+      const monday = wrGetWeekMonday(wrView.year, wrView.week);
+      monday.setUTCDate(monday.getUTCDate() - 7);
+      wrView = wrGetISOWeek(monday);
+      render();
+    });
+    document.getElementById('wrNextWeek').addEventListener('click', ()=>{
+      const monday = wrGetWeekMonday(wrView.year, wrView.week);
+      monday.setUTCDate(monday.getUTCDate() + 7);
+      wrView = wrGetISOWeek(monday);
+      render();
+    });
+    document.getElementById('wrThisWeek').addEventListener('click', ()=>{
+      wrView = wrGetISOWeek(new Date());
+      render();
+    });
+    document.getElementById('wrWeekSelect').addEventListener('change', function(){
+      const val = this.value;
+      if(!val) return;
+      const m = val.match(/^(\d+)-(\d+)$/);
+      if(m){ wrView = { year: parseInt(m[1],10), week: parseInt(m[2],10) }; render(); }
+    });
+    document.getElementById('wrAddBtn').addEventListener('click', wrAddEntry);
+    document.querySelectorAll('[data-del-weekly]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        if(!confirm('Delete this entry?')) return;
+        const id = parseInt(btn.dataset.delWeekly);
+        state.weeklyReports = state.weeklyReports.filter(e=>e.id!==id);
+        commit();
+      });
+    });
+  }
   if(currentPage === 'savings') document.getElementById('svCalcBtn').addEventListener('click', calcSavings);
 
   /* ---- MODULE 06: GITA DOC CHECKLIST ---- */
@@ -3566,6 +4796,14 @@ function attachPageHandlers(){
         render();
       });
     });
+    // Per-site "Export PDF" shortcut on the list — skips opening "See Report"
+    // first, so a report can be printed/shared straight from the card.
+    document.querySelectorAll('[data-pdf-export-report-btn]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const r = state.installReports.find(x=>x.id===parseInt(btn.dataset.pdfExportReportBtn));
+        if(r) printDocument(`Installation Report — ${r.siteName || ''}`, buildInstallReportDocHtml(r));
+      });
+    });
 
     if(reportViewId){
       const closeView = ()=>{ reportViewId = null; render(); };
@@ -3678,6 +4916,130 @@ function attachPageHandlers(){
     bindNum('kpiWinRateMin','targetWinRateMin', true);
     bindNum('kpiWinRateMax','targetWinRateMax', true);
     bindNum('kpiSiteVisitTarget','targetSiteVisitRate', true);
+  }
+
+  if(currentPage === 'guidelines'){
+    const searchInput = document.getElementById('guidelineSearchInput');
+    const runSearch = ()=>{ guidelineSearchQuery = searchInput.value.trim(); render(); };
+    document.getElementById('guidelineSearchBtn').addEventListener('click', runSearch);
+    searchInput && searchInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); runSearch(); } });
+
+    document.querySelectorAll('[data-guideline-filter]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{ guidelineCategoryFilter = btn.dataset.guidelineFilter; render(); });
+    });
+
+    document.querySelectorAll('[data-toggle-guideline]').forEach(head=>{
+      head.addEventListener('click', e=>{
+        if(e.target.closest('[data-edit-guideline], [data-delete-guideline]')) return;
+        const id = parseInt(head.dataset.toggleGuideline);
+        if(expandedGuidelineIds.has(id)) expandedGuidelineIds.delete(id); else expandedGuidelineIds.add(id);
+        render();
+      });
+    });
+
+    document.getElementById('addGuidelineBtn').addEventListener('click', ()=>{
+      editingGuidelineId = null;
+      guidelineModalOpen = true;
+      render();
+    });
+
+    document.querySelectorAll('[data-edit-guideline]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        editingGuidelineId = parseInt(btn.dataset.editGuideline);
+        guidelineModalOpen = true;
+        render();
+      });
+    });
+
+    document.querySelectorAll('[data-delete-guideline]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = parseInt(btn.dataset.deleteGuideline);
+        const item = state.guidelines.find(x=>x.id===id);
+        if(item && confirm(`Delete guideline "${item.title}"? This can't be undone.`)){
+          state.guidelines = state.guidelines.filter(x=>x.id!==id);
+          commit();
+        }
+      });
+    });
+
+    if(guidelineModalOpen){
+      const overlay = document.getElementById('guidelineModalOverlay');
+      const closeModal = ()=>{ guidelineModalOpen = false; editingGuidelineId = null; render(); };
+      overlay && overlay.addEventListener('click', e=>{ if(e.target === overlay) closeModal(); });
+      document.querySelectorAll('#guidelineCancelBtn, #guidelineCancelBtn2').forEach(b=> b.addEventListener('click', closeModal));
+
+      // Attachment upload is staged here and only committed to state when
+      // "Save Guideline" is pressed, mirroring the rest of the app's
+      // save-on-submit pattern for this modal.
+      let pendingAttachment = editingGuidelineId ? (state.guidelines.find(x=>x.id===editingGuidelineId)?.attachment || null) : null;
+      let pendingAttachmentRemoved = false;
+
+      const attachmentInput = document.getElementById('guideAttachmentInput');
+      attachmentInput && attachmentInput.addEventListener('change', async ()=>{
+        const file = attachmentInput.files && attachmentInput.files[0];
+        if(!file) return;
+        const isPdf = file.type === 'application/pdf';
+        const isImage = /^image\//.test(file.type);
+        if(!isPdf && !isImage){
+          alert('Please upload a PDF or an image file.');
+          attachmentInput.value = '';
+          return;
+        }
+        if(file.size > 4*1024*1024){
+          alert('That file is too large — please keep attachments under 4MB.');
+          attachmentInput.value = '';
+          return;
+        }
+        try{
+          const dataUrl = await readFileAsDataUrl(file);
+          pendingAttachment = { name: file.name, type: file.type, dataUrl };
+          pendingAttachmentRemoved = false;
+          const preview = document.getElementById('guideAttachmentPreview');
+          preview.innerHTML = `
+            <div class="proposal-file-row">
+              <a class="proposal-file-link" href="${dataUrl}" target="_blank" rel="noopener">📎 ${escapeHtml(file.name)}</a>
+              <button type="button" class="proposal-file-remove" id="guideRemoveAttachmentBtn">✕ Remove</button>
+            </div>`;
+          document.getElementById('guideRemoveAttachmentBtn').addEventListener('click', ()=>{
+            pendingAttachment = null;
+            pendingAttachmentRemoved = true;
+            preview.innerHTML = `<p class="roof-photo-empty">No file attached yet.</p>`;
+          });
+        }catch(err){
+          console.error('Guideline attachment upload failed', err);
+          alert('Could not read that file — please try again.');
+        }
+      });
+
+      const removeBtn = document.getElementById('guideRemoveAttachmentBtn');
+      removeBtn && removeBtn.addEventListener('click', ()=>{
+        pendingAttachment = null;
+        pendingAttachmentRemoved = true;
+        document.getElementById('guideAttachmentPreview').innerHTML = `<p class="roof-photo-empty">No file attached yet.</p>`;
+      });
+
+      document.getElementById('guidelineSaveBtn').addEventListener('click', ()=>{
+        const title = document.getElementById('guideTitle').value.trim();
+        const category = document.getElementById('guideCategory').value.trim() || 'General';
+        const content = document.getElementById('guideContent').value.trim();
+        if(!title){ document.getElementById('guideFormError').style.display = 'block'; return; }
+
+        const data = { title, category, content, updatedAt: new Date().toISOString() };
+        if(!pendingAttachmentRemoved && pendingAttachment) data.attachment = pendingAttachment;
+        else if(pendingAttachmentRemoved) data.attachment = null;
+
+        if(editingGuidelineId){
+          const item = state.guidelines.find(x=>x.id===editingGuidelineId);
+          Object.assign(item, data);
+          if(!('attachment' in data)) item.attachment = item.attachment || null;
+        } else {
+          state.guidelines.push({ id: uid(), attachment: null, ...data });
+        }
+        guidelineModalOpen = false;
+        editingGuidelineId = null;
+        commit();
+      });
+    }
   }
 }
 

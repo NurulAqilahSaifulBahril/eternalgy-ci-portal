@@ -35,7 +35,7 @@ function createWindow(){
     height: 900,
     minWidth: 900,
     minHeight: 600,
-    backgroundColor: '#F5F7F1',
+    backgroundColor: '#F5F7FA',
     show: false,
     title: 'Eternalgy C&I Portal',
     webPreferences: {

@@ -2,9 +2,10 @@
 
 Commercial-department portal for solar C&I projects, packaged as a Windows desktop app.
 
-Nine modules: Sales Pipeline, Project Management (with customisable stages), Material List,
-Solar Design, Savings Analysis, GITA Doc Checklist, Installation Reports, KPI Dashboard, and
-an admin-only IT Admin page.
+Eleven modules: Sales Pipeline, Project Management (with customisable stages), Material List,
+Solar Design, Savings Analysis, GITA Calculator, GITA Doc Checklist, Installation Reports,
+KPI Dashboard, Guidelines, Weekly Job Report, and an admin-only IT Admin page. The sidebar has a
+light/dark theme toggle; the choice is remembered per machine.
 
 ## Install
 
