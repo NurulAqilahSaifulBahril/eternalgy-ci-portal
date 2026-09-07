@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Eternalgy C&I Portal — Install &amp; Update Guide</title>
+<style>
+  /* Every page carries its own margins. The first page is a *named* page with
+     no top/side margin, so the dark hero can bleed to the sheet edge without
+     negative margins fighting the pagination. */
+  @page { size: A4; margin: 17mm 22mm 19mm; }
+  @page cover { size: A4; margin: 0 0 19mm; }
+  .cover{ page: cover; }
+  .cover-body{ padding: 0 22mm; }
+
+  :root{
+    --ink:#1B2430;
+    --ink-soft:#5A6675;
+    --hero:#0F1B2D;
+    --blue:#2563EB;
+    --blue-bright:#4F8BF5;
+    --blue-soft:#E8F0FE;
+    --line:#E3E8EF;
+    --code-bg:#F1F3F6;
+    --amber-bg:#FFF7E6;
+    --amber-line:#E3A008;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:"Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    color:var(--ink);
+    font-size:11pt;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .page{ padding:0; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:var(--hero);
+    color:#fff;
+    padding:16mm 22mm 11mm;
+  }
+  .hero-logo{ height:26px; width:auto; display:block; margin-bottom:12mm; }
+  .hero h1{
+    font-size:31pt; line-height:1.06; font-weight:700; margin:0 0 2mm;
+    letter-spacing:-0.6px;
+  }
+  .hero-sub{
+    font-size:23pt; line-height:1.1; font-weight:700; margin:0 0 5mm;
+    color:var(--blue-bright); letter-spacing:-0.4px;
+  }
+  .hero-meta{ font-size:10pt; color:#9AA7B8; margin:0; }
+  .hero-rule{ height:5px; background:var(--blue); }
+
+  /* ---------- body basics ---------- */
+  p{ margin:0 0 3.6mm; }
+  a{ color:var(--blue); font-weight:600; text-decoration:none; border-bottom:1.5px solid var(--blue); }
+  strong{ font-weight:600; color:#131C27; }
+  code{
+    font-family:"Cascadia Mono", Consolas, "Courier New", monospace;
+    font-size:9.2pt; background:var(--code-bg); padding:1.5px 5px; border-radius:4px;
+    color:#243244; white-space:nowrap;
+  }
+  .intro{ margin-top:10mm; }
+  .xref{ font-style:italic; color:var(--ink-soft); margin-bottom:0; }
+  hr.sep{ border:0; border-top:1px solid var(--line); margin:8mm 0 7mm; }
+
+  /* ---------- part ---------- */
+  .part{ break-inside:avoid; }
+  .pill{
+    display:inline-block; background:var(--blue); color:#fff;
+    font-size:7.6pt; font-weight:700; letter-spacing:1.1px; text-transform:uppercase;
+    padding:2.6px 11px; border-radius:999px; margin-bottom:4mm;
+  }
+  h2.part-title{ break-after:avoid;
+    font-size:19pt; font-weight:700; margin:0 0 3mm; letter-spacing:-0.3px; color:var(--hero);
+  }
+  h2.part-title::after{
+    content:''; display:block; width:16mm; height:3px; background:var(--blue);
+    border-radius:2px; margin-top:2.5mm;
+  }
+
+  /* ---------- steps ---------- */
+  .step{ margin-top:7mm; }
+  .page > .step:first-child{ margin-top:0; }
+  .step.newpage{ break-before:page; margin-top:0; }
+  /* break-after keeps the heading with what follows; break-inside stops the
+     icon and its text being split across the page edge. */
+  .step-head{ display:flex; align-items:center; gap:4mm; margin-bottom:4mm;
+    break-inside:avoid; break-after:avoid; }
+  .step-icon{
+    width:9mm; height:9mm; border-radius:50%; background:var(--blue);
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  .step-icon svg{ width:4.6mm; height:4.6mm; fill:none; stroke:#fff; stroke-width:2.1;
+    stroke-linecap:round; stroke-linejoin:round; }
+  .step-head h3{ font-size:13.5pt; font-weight:700; margin:0; color:var(--hero); letter-spacing:-0.2px; }
+
+  ol.steps, ul.steps{ list-style:none; margin:0 0 0 0; padding:0; }
+  ol.steps > li{
+    display:flex; gap:4mm; align-items:flex-start; margin-bottom:3mm;
+    break-inside:avoid;
+  }
+  ol.steps > li > .n{
+    flex:0 0 auto; width:5.6mm; height:5.6mm; border-radius:2mm;
+    background:var(--blue-soft); color:var(--blue);
+    font-size:8.2pt; font-weight:700; display:flex; align-items:center; justify-content:center;
+    margin-top:0.6mm;
+  }
+  ol.steps > li > .t{ flex:1; }
+  ol.steps > li p{ margin:0; }
+  ol.steps > li p + p{ margin-top:1.6mm; }
+
+  ul.bullets{ margin:0 0 3.6mm; padding-left:5mm; }
+  ul.bullets li{ margin-bottom:1.8mm; }
+
+  .sub-pill{
+    display:inline-block; background:var(--blue); color:#fff;
+    font-size:7.2pt; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    padding:2.2px 9px; border-radius:999px; margin:1mm 0 3.5mm;
+  }
+
+  /* ---------- callouts ---------- */
+  .note{
+    background:#F5F8FE; border-left:3px solid var(--blue);
+    padding:4mm 5mm; margin:4.5mm 0; border-radius:0 3px 3px 0; break-inside:avoid;
+  }
+  .note.warn{ background:var(--amber-bg); border-left-color:var(--amber-line); }
+  .note p:last-child{ margin-bottom:0; }
+  .note .label{
+    display:block; font-size:8pt; font-weight:700; letter-spacing:.9px; text-transform:uppercase;
+    color:var(--blue); margin-bottom:1.6mm;
+  }
+  .note.warn .label{ color:#96690A; }
+
+  /* ---------- table ---------- */
+  table.creds{ border-collapse:collapse; margin:3mm 0 4mm; font-size:10pt; }
+  table.creds th{
+    text-align:left; font-size:7.8pt; text-transform:uppercase; letter-spacing:.7px;
+    color:var(--ink-soft); font-weight:700; padding:2mm 8mm 2mm 0; border-bottom:2px solid var(--line);
+  }
+  table.creds td{ padding:2.4mm 8mm 2.4mm 0; border-bottom:1px solid var(--line); }
+
+  .break{ break-before:page; }
+  .end{
+    margin-top:5mm; padding-top:3.5mm; border-top:1px solid var(--line);
+    font-size:9pt; color:var(--ink-soft); break-inside:avoid;
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+<header class="hero">
+  <img class="hero-logo" src="__LOGO__" alt="Eternalgy">
+  <h1>C&amp;I Portal</h1>
+  <p class="hero-sub">Install &amp; Update Guide</p>
+  <p class="hero-meta">Commercial Department &nbsp;·&nbsp; Version 1.0.1 &nbsp;·&nbsp; August 2026</p>
+</header>
+<div class="hero-rule"></div>
+
+<div class="cover-body">
+
+  <p class="intro">A short guide for everyone using the C&amp;I Portal on <strong>Windows</strong>. You install it
+  <strong>once</strong>. After that it keeps itself up to date.</p>
+
+  <p class="xref"><em>There is no Mac version yet — the Portal is currently Windows only.</em></p>
+
+  <hr class="sep">
+
+  <!-- ============ PART 1 ============ -->
+  <div class="part">
+    <span class="pill">Part 1</span>
+    <h2 class="part-title">Part 1 — Installing</h2>
+  </div>
+
+  <p>Set aside about 5 minutes. There is nothing to install beforehand — the Portal brings everything it
+  needs with it, and it does not need administrator rights.</p>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg></span>
+      <h3>Step 1 — Download the Portal</h3>
+    </div>
+    <ol class="steps">
+      <li><span class="n">1</span><div class="t"><p>Go to the <a href="https://github.com/NurulAqilahSaifulBahril/eternalgy-ci-portal/releases/latest">C&amp;I Portal download page</a>.</p></div></li>
+      <li><span class="n">2</span><div class="t"><p>Scroll down to the <strong>Assets</strong> list.</p></div></li>
+      <li><span class="n">3</span><div class="t"><p>Click <code>Eternalgy-CI-Portal-Setup-1.0.1.exe</code> to download it.</p>
+        <p>It is about 78 MB, so give it a moment on a slow connection.</p></div></li>
+    </ol>
+  </div>
+</div>
+</div>
+
+<div class="page break">
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-icon"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      <h3>Step 2 — Install</h3>
+    </div>
+    <span class="sub-pill">Windows</span>
+    <ol class="steps">
+      <li><span class="n">1</span><div class="t"><p>Open the file you just downloaded.</p></div></li>
+      <li><span class="n">2</span><div class="t">
+        <p><strong>If Windows shows a blue "Windows protected your PC" box:</strong> click <strong>More info</strong>,
+        then <strong>Run anyway</strong>.</p>
+        <p>This is normal — Windows shows it for any app it has not seen before.</p></div></li>
+      <li><span class="n">3</span><div class="t"><p>Choose where to install it, or just accept the suggested folder, and click <strong>Install</strong>.</p></div></li>
+      <li><span class="n">4</span><div class="t"><p>When it finishes, the Portal opens on its own. You will also find it on your
+        <strong>Desktop</strong> and in the <strong>Start menu</strong> as <strong>Eternalgy C&amp;I Portal</strong>.</p></div></li>
+    </ol>
+
+    <div class="note warn">
+      <span class="label">Why the warning appears</span>
+      <p>The installer is not code-signed, so Windows cannot show a publisher name. The warning is about the
+      missing certificate, not about anything found in the file. It will keep appearing on each new version
+      until a code-signing certificate is purchased.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.4"/><path d="M5.5 19.5c0-3.4 2.9-5.5 6.5-5.5s6.5 2.1 6.5 5.5"/></svg></span>
+      <h3>Step 3 — Sign in for the first time</h3>
+    </div>
+    <p>The Portal starts with a single administrator account:</p>
+    <table class="creds">
+      <tr><th>Username</th><th>Password</th></tr>
+      <tr><td><code>admin</code></td><td><code>admin123</code></td></tr>
+    </table>
+    <ol class="steps">
+      <li><span class="n">1</span><div class="t"><p>Type the username and password above, then click <strong>Sign in</strong>.</p>
+        <p>Use the <strong>eye icon</strong> in the password box if you want to check what you typed.</p></div></li>
+      <li><span class="n">2</span><div class="t"><p>You are asked to choose your own password straight away. It must be at least
+        <strong>6 characters</strong>. Type it twice and continue.</p></div></li>
+      <li><span class="n">3</span><div class="t"><p>You are now in the Portal. Your name appears at the top left, and
+        <strong>Sign out</strong> sits at the top right of every page.</p></div></li>
+    </ol>
+
+    <div class="note">
+      <span class="label">Do this before anyone else signs in</span>
+      <p>Change the starting password immediately. Until it is changed, anyone who opens the app on that
+      computer can get in with the details printed above.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="page break">
+
+  <!-- ============ PART 2 ============ -->
+  <div class="part">
+    <span class="pill">Part 2</span>
+    <h2 class="part-title">Part 2 — Adding your colleagues</h2>
+  </div>
+
+  <p>Only administrators see this. Everyone else gets modules <strong>01</strong> to <strong>08</strong> and works
+  normally — they simply do not see the IT Admin page.</p>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-icon"><svg viewBox="0 0 24 24"><path d="M16 20v-1.5c0-2-1.8-3.5-4-3.5H8c-2.2 0-4 1.5-4 3.5V20"/><path d="M10 12a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M18 8.5v5M20.5 11h-5"/></svg></span>
+      <h3>Creating an account</h3>
+    </div>
+    <ol class="steps">
+      <li><span class="n">1</span><div class="t"><p>In the sidebar, under <strong>System</strong>, click <strong>IT Admin</strong>.</p></div></li>
+      <li><span class="n">2</span><div class="t"><p>Open the <strong>Users</strong> tab, then click <strong>+ Add user</strong>.</p></div></li>
+      <li><span class="n">3</span><div class="t"><p>Fill in their full name, a username, and a starting password.</p>
+        <p>Usernames may contain spaces — <code>amirul hakim</code> is fine. Capitals and extra spaces are ignored when signing in.</p></div></li>
+      <li><span class="n">4</span><div class="t"><p>Choose a role: <strong>User</strong> for normal work, or <strong>Admin</strong> if they should also
+        manage accounts and see the edit log.</p></div></li>
+      <li><span class="n">5</span><div class="t"><p>Leave <strong>Require a password change at next sign-in</strong> ticked, so they pick their own
+        password the first time they open the Portal.</p></div></li>
+    </ol>
+
+    <div class="note">
+      <span class="label">If someone forgets their password</span>
+      <p>There is no self-service reset. An administrator opens <strong>IT Admin → Users</strong>, clicks
+      <strong>Edit</strong> on that person, types a new password, and leaves the "require a password change" box
+      ticked. The person then sets their own password when they next sign in.</p>
+    </div>
+  </div>
+
+  <div class="step newpage">
+    <div class="step-head">
+      <span class="step-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+      <h3>Seeing who changed what</h3>
+    </div>
+    <p><strong>IT Admin → Edit log</strong> records every change: who made it, when, which module and record, which
+    field, and the value before and after. Sign-ins, failed sign-ins and account changes are listed too.</p>
+    <ul class="bullets">
+      <li>Filter by person, module, action, date range, or free text.</li>
+      <li><strong>Export CSV</strong> saves whatever the filters are currently showing.</li>
+      <li>The log keeps the most recent <strong>3,000</strong> entries.</li>
+    </ul>
+
+    <div class="note warn">
+      <span class="label">What signing in does and does not do</span>
+      <p>Sign-in makes the Portal accountable — every change carries a name, and ordinary users cannot reach
+      IT Admin. It is <strong>not</strong> a security boundary: the whole Portal runs on the local computer, so
+      somebody technical could reach the underlying data directly. Treat it as a record of who did what, not as
+      a lock on the data.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="page">
+
+  <!-- ============ PART 3 ============ -->
+  <div class="part" style="margin-top:11mm;">
+    <span class="pill">Part 3</span>
+    <h2 class="part-title">Part 3 — Staying up to date</h2>
+  </div>
+
+  <p>You do not need to download anything again. The Portal checks for a newer version each time it starts.</p>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-icon"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 10-.6 3.5"/><path d="M20 5v6h-6"/></svg></span>
+      <h3>How an update reaches you</h3>
+    </div>
+    <ol class="steps">
+      <li><span class="n">1</span><div class="t"><p>You open the Portal and work as normal.</p></div></li>
+      <li><span class="n">2</span><div class="t"><p>If a newer version exists, it downloads quietly in the background. Nothing interrupts you.</p></div></li>
+      <li><span class="n">3</span><div class="t"><p>A dark bar appears at the bottom of the window:
+        <strong>"Version 1.0.2 is ready to install."</strong></p></div></li>
+      <li><span class="n">4</span><div class="t"><p>Click <strong>Restart now</strong> when you are at a sensible stopping point. The Portal closes,
+        updates, and reopens.</p></div></li>
+      <li><span class="n">5</span><div class="t"><p>Not a good moment? Click <strong>✕</strong> to dismiss the bar. The update installs by itself the
+        next time you close the Portal.</p></div></li>
+    </ol>
+
+    <div class="note">
+      <span class="label">Your data is safe across updates</span>
+      <p>Updating never touches your records. Clients, deals, materials, reports, users and the edit log all
+      stay exactly as they were.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.4-4.4"/></svg></span>
+      <h3>Checking by hand</h3>
+    </div>
+    <p>To check without waiting for a restart, use <strong>File → Check for Updates…</strong> in the menu bar. If you
+    are already current, the Portal says so.</p>
+    <p>You can confirm which version you are running under <strong>Help → About</strong>.</p>
+  </div>
+
+  <!-- ============ PART 4 ============ -->
+  <div class="part" style="margin-top:11mm;">
+    <span class="pill">Part 4</span>
+    <h2 class="part-title">Part 4 — Your data</h2>
+  </div>
+
+  <p>This is the part most worth reading twice.</p>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-icon"><svg viewBox="0 0 24 24"><path d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3z"/><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+      <h3>Where your records live</h3>
+    </div>
+    <p>Everything you enter is stored <strong>on your own computer</strong>. There is no server behind the Portal.
+    That has three consequences worth knowing:</p>
+    <ul class="bullets">
+      <li>Two people running the Portal do <strong>not</strong> see each other's data. Each copy is separate.</li>
+      <li>If that computer is lost or wiped, the data goes with it unless you have a backup.</li>
+      <li>Data entered in the web version at <code>localhost</code> does not appear in the installed app —
+      move it across with a backup file.</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <span class="step-icon"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 19h14"/></svg></span>
+      <h3>Backing up and moving data</h3>
+    </div>
+    <ol class="steps">
+      <li><span class="n">1</span><div class="t"><p>At the bottom of the sidebar, click <strong>⬇ Backup (.json)</strong>. A file is saved to your
+        Downloads folder, dated with today's date.</p></div></li>
+      <li><span class="n">2</span><div class="t"><p>Keep it somewhere safe — a shared drive or OneDrive folder.</p></div></li>
+      <li><span class="n">3</span><div class="t"><p>To load it on another computer, open the Portal there and click
+        <strong>⬆ Restore backup</strong>.</p></div></li>
+    </ol>
+
+    <div class="note warn">
+      <span class="label">Handle backup files carefully</span>
+      <p>A backup contains every record <em>and</em> the user accounts, including scrambled password data. It is
+      not a file to email around casually. Restoring a backup also <strong>replaces</strong> everything currently in
+      the Portal on that computer — it does not merge.</p>
+    </div>
+    <p>Get into the habit of taking a backup at the end of each week, and always before restoring one.</p>
+  </div>
+
+  <p class="end">Eternalgy C&amp;I Portal · Version 1.0.1 · Commercial Department · August 2026<br>
+  Questions or something not working as described? Contact your system administrator.</p>
+
+</div>
+
+</body>
+</html>
