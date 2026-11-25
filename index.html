@@ -339,7 +339,7 @@
   .letterhead-block{ margin:0 0 14px; }
   .letterhead-img{ width:100%; max-width:520px; height:auto; display:block; }
   .letterhead-rule{ height:2px; background:linear-gradient(90deg, var(--navy) 0%, var(--navy) 60%, transparent 100%); margin:0 0 18px; }
-  .report-doc{ background:#fff; border-radius:4px; counter-reset:section-counter; }
+  .report-doc{ background:var(--panel); border-radius:4px; counter-reset:section-counter; }
   .report-doc h1{ font-size:20px; margin:0 0 2px; color:var(--navy); }
   .report-doc .report-doc-sub{ color:var(--ink-soft); font-size:12.5px; margin:0 0 14px; }
   /* Document control strip — doc no / generated timestamp / classification,
@@ -374,7 +374,25 @@
   .doc-signoff .signoff-line{ border-top:1px solid var(--ink); margin-bottom:5px; }
   .doc-signoff .signoff-sub{ font-size:10px; color:var(--ink-soft); }
   .doc-footer-note{ margin-top:18px; font-size:9.5px; color:var(--ink-soft); text-align:center; border-top:1px solid var(--line); padding-top:8px; }
+  /* Dark theme: the report sits on the same panel colour as every other popup
+     instead of a white sheet; the light-only accents get dark equivalents. */
+  html[data-theme="dark"] .doc-control{ background:var(--panel-2); }
+  html[data-theme="dark"] .doc-control .doc-classification{ background:var(--tint-amber-bg); color:var(--amber-ink); }
+  html[data-theme="dark"] .report-doc table tbody tr:nth-child(even){ background:var(--panel-2); }
+  html[data-theme="dark"] .report-doc table tbody tr:hover{ background:rgba(255,255,255,0.06); }
+  /* The letterhead is a JPEG on a solid white background: invert it (dark ink → light)
+     and screen-blend it so its now-black background disappears into the panel. */
+  html[data-theme="dark"] .letterhead-img{ filter:invert(1) hue-rotate(180deg); mix-blend-mode:screen; }
   @media print{
+    /* Printed / PDF reports always come out as a white page, whatever the theme. */
+    html[data-theme="dark"] #printArea{
+      --navy:#2F6FB0; --panel:#FFFFFF; --panel-2:#EEF2F6; --ink:#1B2733; --ink-soft:#5B6B7A;
+      --line:#DCE3EA; --amber-ink:#C97D1A; --tint-amber-bg:#FFF6E8; color:#1B2733;
+    }
+    html[data-theme="dark"] #printArea .doc-control{ background:#F4F6F5; }
+    html[data-theme="dark"] #printArea .doc-control .doc-classification{ background:#FCEBC7; color:#8A5A00; }
+    html[data-theme="dark"] #printArea .report-doc table tbody tr:nth-child(even){ background:#F6F8F7; }
+    html[data-theme="dark"] #printArea .letterhead-img{ filter:none; mix-blend-mode:normal; }
     body *{ visibility:hidden; }
     #printArea, #printArea *{ visibility:visible; }
     #printArea{ position:absolute; left:0; top:0; width:100%; padding:0; }

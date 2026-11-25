@@ -248,7 +248,15 @@ function buildMenu(){
     ]},
     { label: 'View', submenu: [
       { role: 'reload' }, { role: 'forceReload' }, { type: 'separator' },
-      { role: 'resetZoom' }, { role: 'zoomIn' }, { role: 'zoomOut' }, { type: 'separator' },
+      { role: 'resetZoom' },
+      // Electron's default Zoom In accelerator is Ctrl+Plus, which on most keyboards
+      // needs Shift — so plain Ctrl + "=" / numpad "+" did nothing. Bind those too.
+      { role: 'zoomIn', accelerator: 'CommandOrControl+=' },
+      { role: 'zoomIn', accelerator: 'CommandOrControl+Plus', visible: false },
+      { role: 'zoomIn', accelerator: 'CommandOrControl+numadd', visible: false },
+      { role: 'zoomOut' },
+      { role: 'zoomOut', accelerator: 'CommandOrControl+numsub', visible: false },
+      { type: 'separator' },
       { role: 'togglefullscreen' }, { role: 'toggleDevTools' }
     ]},
     { label: 'Help', submenu: [
